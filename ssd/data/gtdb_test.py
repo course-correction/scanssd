@@ -20,7 +20,7 @@ import time
 import torch.nn.functional as F
 from torchvision import transforms
 from PIL import Image
-from ScanSSD.ssd.gtdb import box_utils
+from scanssd.ssd.gtdb import box_utils
 # from gtdb import feature_extractor
 # import copy
 # import utils.visualize as visualize

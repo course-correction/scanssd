@@ -13,10 +13,10 @@ import torch.utils.data as data
 import cv2
 import numpy as np
 
-from ScanSSD.ssd.utils import box_utils
-from ScanSSD.ssd.utils import feature_extractor
+from scanssd.ssd.utils import box_utils
+from scanssd.ssd.utils import feature_extractor
 import copy
-import ScanSSD.ssd.utils.visualize as visualize
+import scanssd.ssd.utils.visualize as visualize
 
 
 GTDB_CLASSES = "math"  # always index 0 is background

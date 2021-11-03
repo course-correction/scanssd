@@ -23,7 +23,7 @@ import time
 import torch.nn.functional as F
 from torch.tensor import Tensor
 import torchvision.transforms as transforms
-from ScanSSD.ssd.utils.augmentations import GenerateWindows, PadTensor, DPRLToTensor
+from scanssd.ssd.utils.augmentations import GenerateWindows, PadTensor, DPRLToTensor
 
 
 class GTDBDetection(data.IterableDataset):
