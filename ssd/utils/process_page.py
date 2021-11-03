@@ -7,8 +7,8 @@ import tqdm
 import numpy as np
 import time
 
-from ScanSSD.ssd.utils.xy_splitting_numpy import create_splits
-from ScanSSD.ssd.utils.stitch_patches_pdf import preprocess_math_regions
+from scanssd.ssd.utils.xy_splitting_numpy import create_splits
+from scanssd.ssd.utils.stitch_patches_pdf import preprocess_math_regions
 
 
 

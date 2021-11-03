@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
-from ScanSSD.ssd.layers import *
+from scanssd.ssd.layers import *
 import os
 import numpy as np
 

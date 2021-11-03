@@ -4,8 +4,8 @@
 
 # read the image
 import os
-from ScanSSD.ssd.utils import fit_box
-from ScanSSD.ssd.utils import feature_extractor
+from scanssd.ssd.utils import fit_box
+from scanssd.ssd.utils import feature_extractor
 import numpy as np
 import argparse
 import cv2

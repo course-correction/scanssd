@@ -18,16 +18,16 @@ Developed using Cuda 11.2 and Pytorch 1.3.0
 - <a href='#testing'>Testing</a>
 - <a href='#performance'>Performance</a>
 
-&nbsp;
-&nbsp;
-
 ## Installation
-- Refer to Installation instructions in the **main** README.
-- To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
-
+First make sure you have Anaconda3 installed on your system. Then run the following commands
+```zsh
+$ conda create -n scanssd python=3.6.9
+$ conda activate scanssd
+(scanssd) $ pip install -r requirements.txt
+```
 
 ## Code Organization
- 
+
 SSD model is built in `ssd.py`. Training and testing the SSD is managed in `train.py` and `test.py`. All the training code is in `layers` directory. Hyper-parameters for training and testing can be specified through command line and through `config.py` file inside `data` directory. 
 
 `data` directory also contains `gtdb_iterable.py` data reader that uses sliding windows to generates sub-images of page for training. All the scripts for pooling the sub-image level detections and XY Cuts are in `utils` directory. 

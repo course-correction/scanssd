@@ -9,21 +9,21 @@ import torch.backends.cudnn as cudnn
 import torch.cuda.nccl
 #import progressbar 
 
-from ScanSSD.ssd.ssd import build_ssd
+from scanssd.ssd.ssd import build_ssd
 import logging
 import time
 import datetime
 from torch.autograd import Variable
 from torchvision import datasets, transforms
 from torch.utils.data import Dataset, DataLoader
-from ScanSSD.ssd.data import *
+from scanssd.ssd.data import *
 import shutil
 from tqdm import tqdm
 import torch.nn as nn
-from ScanSSD.ssd.utils.process_page import process_page
+from scanssd.ssd.utils.process_page import process_page
 
 import numpy as np
-from ScanSSD.ssd.utils.process_page import process_page
+from scanssd.ssd.utils.process_page import process_page
 
 
 # uncomment this to hide the package deprecation warning 

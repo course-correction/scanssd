@@ -2,7 +2,7 @@
 # This file contains many common operations on the bounding boxes like finding intersection
 from collections import OrderedDict
 
-import ScanSSD.ssd.utils.feature_extractor
+import scanssd.ssd.utils.feature_extractor
 
 def check_inside(rectA, rectB):
 

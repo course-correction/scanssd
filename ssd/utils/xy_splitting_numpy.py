@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from ScanSSD.ssd.utils.viz_final_boxes import viz_boxes
+from scanssd.ssd.utils.viz_final_boxes import viz_boxes
 
 # XY Cut to split all overlapping regions
 class SplitDoc(object):
