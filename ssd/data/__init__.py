@@ -1,6 +1,6 @@
 #from .gtdb import GTDB_CLASSES, GTDB_ROOT, GTDBAnnotationTransform, GTDBDetection
 from .gtdb_new import GTDB_CLASSES, GTDB_ROOT, GTDBAnnotationTransform
-from ScanSSD.ssd.data.gtdb_iterable import GTDBDetection, worker_init_fn
+from scanssd.ssd.data.gtdb_iterable import GTDBDetection, worker_init_fn
 from .config import *
 import torch
 import cv2
