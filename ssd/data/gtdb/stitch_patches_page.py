@@ -8,15 +8,15 @@ import cv2
 import os
 import csv
 import numpy as np
-import ScanSSD.ssd.utils.visualize as visualize
+import scanssd.ssd.utils.visualize as visualize
 from multiprocessing import Pool
 from cv2.dnn import NMSBoxes
 from scipy.ndimage.measurements import label
 import scipy.ndimage as ndimage
 import copy
-from ScanSSD.ssd.gtdb import fit_box
-from ScanSSD.ssd.gtdb import box_utils
-from ScanSSD.ssd.gtdb import feature_extractor
+from scanssd.ssd.gtdb import fit_box
+from scanssd.ssd.gtdb import box_utils
+from scanssd.ssd.gtdb import feature_extractor
 import shutil
 import time
 from sklearn.cluster import AgglomerativeClustering

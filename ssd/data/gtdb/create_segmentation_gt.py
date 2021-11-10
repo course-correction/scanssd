@@ -7,7 +7,7 @@ import csv
 import numpy as np
 from multiprocessing import Pool
 import shutil
-from ScanSSD.ssd.gtdb import feature_extractor
+from scanssd.ssd.gtdb import feature_extractor
 
 def intersects(first, other):
     return not (first[2] < other[0] or

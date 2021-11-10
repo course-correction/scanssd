@@ -8,7 +8,7 @@ import cv2
 import os
 import csv
 import numpy as np
-import ScanSSD.ssd.utils.visualize as visualize
+import scanssd.ssd.utils.visualize as visualize
 from multiprocessing import Pool
 from cv2.dnn import NMSBoxes
 from scipy.ndimage.measurements import label

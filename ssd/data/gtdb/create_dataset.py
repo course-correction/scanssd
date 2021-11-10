@@ -8,8 +8,8 @@ import cv2
 import os
 import numpy as np
 from multiprocessing import Pool
-from ScanSSD.ssd.gtdb import fit_box
-from ScanSSD.ssd.gtdb import feature_extractor
+from scanssd.ssd.gtdb import fit_box
+from scanssd.ssd.gtdb import feature_extractor
 import argparse
 
 # Default parameters for thr GTDB dataset

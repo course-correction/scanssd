@@ -7,9 +7,9 @@ sys.path.extend(['/home/psm2208/code', '/home/psm2208/code'])
 
 import csv
 from multiprocessing import Pool
-from ScanSSD.IOU_lib import IOUevaluater
+from scanssd.IOU_lib import IOUevaluater
 import copy
-from ScanSSD.ssd.gtdb import box_utils
+from scanssd.ssd.gtdb import box_utils
 
 # check if two rectangles intersect
 def intersects(first, other):

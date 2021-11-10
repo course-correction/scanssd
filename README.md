@@ -44,10 +44,8 @@ To generate .pmath files or .pchar files you can use [this](https://github.com/M
 
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
 - By default, we assume you have downloaded the file in the `ssd/base_weights` dir.
-- From the `<root>/src` of the repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
+- From the `<root>` of this repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
   You may add this path to your `.bashrc` profile to avoid exporting it everytime.
-- **Note:** Even if you want to run ScanSSD standalone, you have to run the model from the root directory 
-  of the repo (i.e. the pipeline repo). Otherwise, you might run into import issues.
 
 - Example Run command - For training with TFD-ICDARv2 dataset on 2 GPUs. 
 
@@ -87,18 +85,18 @@ Alternatively, running the makefile to install the pipeline will automatically d
 To test a trained network, from the `src` directory (Make sure you have added this to PYTHONPATH):
 
 ```Shell
-python3 ScanSSD/ssd/test.py 
---save_folder ScanSSD/ssd/eval/ 
+python3 ssd/test.py 
+--save_folder ssd/eval/ 
 --cuda True 
---dataset_root ScanSSD/gtdb_data/ 
+--dataset_root gtdb_data/ 
 --model_type 512 
 --trained_model trained_weights/ssd512GTDB_epoch14.pth 
 --cfg math_gtdb_512 
 --padding 0 2 
 --kernel 1 5 
 --batch_size 8  
---log_dir ScanSSD/ssd/logs/Merged_Test_Logs/ 
---test_data ScanSSD/file_lists/testing_data 
+--log_dir ssd/logs/
+--test_data file_lists/testing_data 
 --stride 1.0 
 --post_process 0 
 --conf 0.1 

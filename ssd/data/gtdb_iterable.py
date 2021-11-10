@@ -98,10 +98,12 @@ class GTDBDetection(data.IterableDataset):
         tot = 0
         for path in self.image_files:
             width, height = imagesize.get(path)
-            new_w = (math.ceil(width / self.window)) * self.window
-            new_h = (math.ceil(height / self.window)) * self.window
-            num_win_w = ((new_w - self.window) / self.stride) + 1
-            num_win_h = ((new_h - self.window) / self.stride) + 1
+            num_win_w = math.ceil(width / self.window)
+            num_win_h = math.ceil(height / self.window)
+            new_w = num_win_w * self.window
+            new_h = num_win_h * self.window
+            num_win_w = math.floor(((new_w - self.window) / self.stride) + 1)
+            num_win_h = math.floor(((new_h - self.window) / self.stride) + 1)
             tot_page_win = num_win_w * num_win_h
             tot += tot_page_win
             windows.append(tot)
