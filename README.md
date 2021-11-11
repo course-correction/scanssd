@@ -25,7 +25,7 @@ $ conda create -n scanssd python=3.6.9
 $ conda activate scanssd
 (scanssd) $ pip install -r requirements.txt
 ```
-
+To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
 ## Code Organization
 
 SSD model is built in `ssd.py`. Training and testing the SSD is managed in `train.py` and `test.py`. All the training code is in `layers` directory. Hyper-parameters for training and testing can be specified through command line and through `config.py` file inside `data` directory. 
@@ -82,25 +82,24 @@ Download and place it in the `ssd/trained_weights` directory.
 Alternatively, running the makefile to install the pipeline will automatically download the weights.
 
 ## Testing
-To test a trained network, from the `src` directory (Make sure you have added this to PYTHONPATH):
+To test a trained network (Make sure you have added this to PYTHONPATH):
 
 ```Shell
 python3 ssd/test.py 
 --save_folder ssd/eval/ 
 --cuda True 
---dataset_root gtdb_data/ 
+--dataset_root test_data/ 
 --model_type 512 
---trained_model trained_weights/ssd512GTDB_epoch14.pth 
+--trained_model ssd/trained_weights/ssd512GTDB_epoch14.pth 
 --cfg math_gtdb_512 
 --padding 0 2 
 --kernel 1 5 
 --batch_size 8  
---log_dir ssd/logs/
---test_data file_lists/testing_data 
+--log_dir ssd/logs/ 
+--test_data file_lists/test_data 
 --stride 1.0 
 --post_process 0 
---conf 0.1 
---gpu 0 1
+--conf 0.1 --gpu 0
 ```
 
 ### Visualize results
@@ -109,10 +108,10 @@ After prediction have been generated you can overlay them over the original imag
 overlay the grounds truths as well. Run `python modules/ScanSSD/ssd/gtdb/viz_final_boxes.py --help` for more information.
 
 ```shell
-python modules/ScanSSD/ssd/utils/viz_final_boxes.py 
---predcsv modules/ScanSSD/ssd/eval/Nested_Test_ssd512GTDB600000/conf_0.3/jones83.csv  
---pagenum 20 
---imgpath modules/ScanSSD/gtdb_data/images/jones83/21.png 
+python ssd/utils/viz_final_boxes.py 
+--predcsv ssd/eval/SSD/conf_0.1/math.csv  
+--pagenum 0 
+--imgpath test_data/images/math/1.png
 ```
 
 ## Evaluate 

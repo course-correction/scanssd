@@ -123,5 +123,11 @@ test_data_aug.py
 data/datasets/
 data/ssd_dataloader.py
 ssd/gtdb/
+*/GTDB-1/
+GTDB-1/
+/GTDB-1/
+*/GTDB-2/
+GTDB-2/
+/GTDB-2/
 # pylint
 .pylintrc
