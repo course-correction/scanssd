@@ -7,6 +7,6 @@ setup(name='ScanSSD',
       author='dprl',
       author_email='rxzvcs@rit.edu',
       url='https://www.cs.rit.edu/~dprl/',
-      package_dir={'': 'ssd'},
+      package_dir={'': 'src'},
       #packages = find_packages()
      )

@@ -486,7 +486,7 @@ def IOUeval(ground_truth, detections, outdir=None):
     return scores, detailed_detections
     
 
-def write_final_csv(exp_nm, al_scores, save_dir='ssd/metrics'):
+def write_final_csv(exp_nm, al_scores, save_dir='src/metrics'):
     header = [datetime.now(), exp_nm]
     fields = ['Conf', 'F_0.01', 'P_0.01', 'R_0.01', 'F_0.25', 'P_0.25', 'R_0.25',
               'F_0.5', 'P_0.5', 'R_0.5', 'F_0.75', 'P_0.75', 'R_0.75',

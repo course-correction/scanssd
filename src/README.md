@@ -18,16 +18,16 @@ Developed using Cuda 11.2 and Pytorch 1.3.0
 - <a href='#testing'>Testing</a>
 - <a href='#performance'>Performance</a>
 
-## Installation
-First make sure you have Anaconda3 installed on your system. Then run the following commands
-```zsh
-$ conda create -n scanssd python=3.6.9
-$ conda activate scanssd
-(scanssd) $ pip install -r requirements.txt
-```
-To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
-## Code Organization
+&nbsp;
+&nbsp;
 
+## Installation
+- Refer to Installation instructions in the **main** README.
+- To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
+
+
+## Code Organization
+ 
 SSD model is built in `ssd.py`. Training and testing the SSD is managed in `train.py` and `test.py`. All the training code is in `layers` directory. Hyper-parameters for training and testing can be specified through command line and through `config.py` file inside `data` directory. 
 
 `data` directory also contains `gtdb_iterable.py` data reader that uses sliding windows to generates sub-images of page for training. All the scripts for pooling the sub-image level detections and XY Cuts are in `utils` directory. 
@@ -44,31 +44,32 @@ To generate .pmath files or .pchar files you can use [this](https://github.com/M
 
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
 - By default, we assume you have downloaded the file in the `ssd/base_weights` dir.
-- From the `<root>` of this repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
+- From the `<root>/src` of the repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
   You may add this path to your `.bashrc` profile to avoid exporting it everytime.
+- **Note:** Even if you want to run ScanSSD standalone, you have to run the model from the root directory 
+  of the repo (i.e. the pipeline repo). Otherwise, you might run into import issues.
 
 - Example Run command - For training with TFD-ICDARv2 dataset on 2 GPUs. 
 
 ```Shell
-
-python3 ScanSSD/src/train.py 
+python3 src/train.py 
 --dataset GTDB 
---dataset_root ScanSSD/gtdb_data/ 
+--dataset_root quick_start_data/ 
 --cuda True 
---visdom False
---batch_size 16 
---num_workers 8 
+--visdom False 
+--batch_size 4 
+--num_workers 4 
 --exp_name ScanSSD_XY_train 
---model_type 512
+--model_type 512 
 --suffix _512 
---training_data ScanSSD/file_lists/training_data 
+--training_data file_lists/quick_start_train 
 --cfg math_gtdb_512 
 --loss_fun ce 
 --kernel 1 5 
 --padding 0 2 
 --neg_mining True 
---stride 0.05
---gpu 0 1
+--stride 0.05 
+--gpu 0
 ```
 
 - Note:
@@ -82,24 +83,25 @@ Download and place it in the `ssd/trained_weights` directory.
 Alternatively, running the makefile to install the pipeline will automatically download the weights.
 
 ## Testing
-To test a trained network (Make sure you have added this to PYTHONPATH):
+To test a trained network, from the `src` directory (Make sure you have added this to PYTHONPATH):
 
 ```Shell
-python3 src/test.py 
---save_folder src/eval/ 
+python3 ScanSSD/src/test.py 
+--save_folder ScanSSD/src/eval/ 
 --cuda True 
---dataset_root quick_start_data/ 
+--dataset_root ScanSSD/gtdb_data/ 
 --model_type 512 
---trained_model src/trained_weights/ssd512GTDB_epoch14.pth 
+--trained_model trained_weights/ssd512GTDB_epoch14.pth 
 --cfg math_gtdb_512 
 --padding 0 2 
 --kernel 1 5 
 --batch_size 8  
---log_dir src/logs/ 
---quick_start_data file_lists/quick_start_data 
+--log_dir ScanSSD/src/logs/Merged_Test_Logs/ 
+--quick_start_data ScanSSD/file_lists/testing_data 
 --stride 1.0 
 --post_process 0 
---conf 0.1 --gpu 0
+--conf 0.1 
+--gpu 0 1
 ```
 
 ### Visualize results
@@ -108,10 +110,10 @@ After prediction have been generated you can overlay them over the original imag
 overlay the grounds truths as well. Run `python modules/ScanSSD/ssd/gtdb/viz_final_boxes.py --help` for more information.
 
 ```shell
-python src/utils/viz_final_boxes.py 
---predcsv src/eval/SSD/conf_0.1/math.csv  
---pagenum 0 
---imgpath quick_start_data/images/math/1.png
+python modules/ScanSSD/src/utils/viz_final_boxes.py 
+--predcsv modules/ScanSSD/src/eval/Nested_Test_ssd512GTDB600000/conf_0.3/jones83.csv  
+--pagenum 20 
+--imgpath modules/ScanSSD/gtdb_data/images/jones83/21.png 
 ```
 
 ## Evaluate 
