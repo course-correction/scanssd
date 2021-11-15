@@ -240,7 +240,7 @@ def parse_args() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dataset_root", default="../", help="Location of VOC root directory"
     )
-    parser.add_argument("--quick_start_data", default="testing_data", help="testing data_loaders file")
+    parser.add_argument("--test_data", default="testing_data", help="testing data_loaders file")
     parser.add_argument("--verbose", default=False, type=bool, help="plot output")
     parser.add_argument(
         "--suffix",

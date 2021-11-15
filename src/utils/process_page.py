@@ -38,12 +38,10 @@ def process_page(args, page_data, doc_count, file_name):
         boxes = page_data[page]
         if len(boxes):
             # extract needed information
-            img_id_conf = page.split('_')
-            img_id = img_id_conf[0]
-            conf = img_id_conf[1]
-
-            page_num = float(img_id.split("/")[1])
-            pdf_name = img_id.split("/")[0]
+            pdf_name = page.split("/")[0]
+            page_num_with_conf = page.split("/")[1]
+            page_num = float(page_num_with_conf.split('_')[0])
+            conf = float(page_num_with_conf.split('_')[1])
             #print (">> pdf_name: " + pdf_name)
 
             # Create CSV file path, and CSV directory if missing.

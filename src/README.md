@@ -86,22 +86,22 @@ Alternatively, running the makefile to install the pipeline will automatically d
 To test a trained network, from the `src` directory (Make sure you have added this to PYTHONPATH):
 
 ```Shell
-python3 ScanSSD/src/test.py 
---save_folder ScanSSD/src/eval/ 
+python3 src/test.py 
+--save_folder src/eval/ 
 --cuda True 
---dataset_root ScanSSD/gtdb_data/ 
+--dataset_root quick_start_data/ 
 --model_type 512 
---trained_model trained_weights/ssd512GTDB_epoch14.pth 
+--trained_model src/trained_weights/ssd512GTDB_epoch14.pth 
 --cfg math_gtdb_512 
 --padding 0 2 
 --kernel 1 5 
---batch_size 8  
---log_dir ScanSSD/src/logs/Merged_Test_Logs/ 
---quick_start_data ScanSSD/file_lists/testing_data 
+--batch_size 4  
+--log_dir src/logs/ 
+--test_data file_lists/quick_start 
 --stride 1.0 
 --post_process 0 
 --conf 0.1 
---gpu 0 1
+--gpu 0
 ```
 
 ### Visualize results
@@ -110,10 +110,10 @@ After prediction have been generated you can overlay them over the original imag
 overlay the grounds truths as well. Run `python modules/ScanSSD/ssd/gtdb/viz_final_boxes.py --help` for more information.
 
 ```shell
-python modules/ScanSSD/src/utils/viz_final_boxes.py 
---predcsv modules/ScanSSD/src/eval/Nested_Test_ssd512GTDB600000/conf_0.3/jones83.csv  
---pagenum 20 
---imgpath modules/ScanSSD/gtdb_data/images/jones83/21.png 
+python src/utils/viz_final_boxes.py 
+--predcsv src/eval/SSD/conf_0.3/AIF_1999_375_404.csv  
+--pagenum 1
+--imgpath quick_start_data/images/AIF_1999_375_404/2.png 
 ```
 
 ## Evaluate 
@@ -124,7 +124,7 @@ the pdf document names and should contain the boxes in the format:
 
 From the `ScanSSD` directory:
 ```Shell
-python3 IOULib/IOUevaluater.py 
+python3 IOU_lib/IOUevaluater.py 
 --ground_truth src/eval/math_gt 
 --detections src/eval/<exp_name>
 ```
