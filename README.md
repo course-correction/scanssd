@@ -51,24 +51,24 @@ To generate .pmath files or .pchar files you can use [this](https://github.com/M
 
 ```Shell
 
-python3 ScanSSD/src/train.py 
+python3 src/train.py 
 --dataset GTDB 
---dataset_root ScanSSD/gtdb_data/ 
+--dataset_root quick_start_data 
 --cuda True 
 --visdom False
---batch_size 16 
---num_workers 8 
+--batch_size 4 
+--num_workers 4 
 --exp_name ScanSSD_XY_train 
 --model_type 512
 --suffix _512 
---training_data ScanSSD/file_lists/training_data 
+--training_data file_lists/quick_start_train 
 --cfg math_gtdb_512 
 --loss_fun ce 
 --kernel 1 5 
 --padding 0 2 
 --neg_mining True 
 --stride 0.05
---gpu 0 1
+--gpu 0
 ```
 
 - Note:
