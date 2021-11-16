@@ -51,9 +51,7 @@ To generate .pmath files or .pchar files you can use [this](https://github.com/M
 
 ```Shell
 
-python3 src/train.py 
---dataset GTDB 
---dataset_root quick_start_data 
+python3 src/train.py  --dataset GTDB --dataset_root quick_start_data 
 --cuda True 
 --visdom False
 --batch_size 4 
