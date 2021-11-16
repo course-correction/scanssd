@@ -99,7 +99,8 @@ python3 src/test.py
 --quick_start_data file_lists/quick_start_data 
 --stride 1.0 
 --post_process 0 
---conf 0.1 --gpu 0
+--conf 0.1 
+--gpu 0
 ```
 
 ### Visualize results
