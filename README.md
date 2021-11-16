@@ -109,9 +109,9 @@ overlay the grounds truths as well. Run `python modules/ScanSSD/ssd/gtdb/viz_fin
 
 ```shell
 python src/utils/viz_final_boxes.py 
---predcsv src/eval/SSD/conf_0.1/math.csv  
+--predcsv src/eval/SSD/conf_0.1/Emden76.csv  
 --pagenum 0 
---imgpath quick_start_data/images/math/1.png
+--imgpath quick_start_data/images/Emden76/2.png
 ```
 
 ## Evaluate 
@@ -122,10 +122,34 @@ the pdf document names and should contain the boxes in the format:
 
 From the `ScanSSD` directory:
 ```Shell
-python3 IOULib/IOUevaluater.py 
---ground_truth src/eval/math_gt 
---detections src/eval/<exp_name>
+python3 IOU_lib/IOUevaluater.py 
+--ground_truth quick_start_data/gt/
+--detections src/eval/SSD/conf_0.1/
+--exp_name ScanSSD_XY
 ```
+**Note:** Make sure that your detection folder structure follows the following structure:
+
+`weight_folder/ssd512GTDB_epoch<number>/conf_<level>/<doc_names>.csv`
+
+You have to run each weight file you want to evaluate separately and keep the same `exp_name` for the same set of weights. It can handle one or many confidence levels.
+For each epoch your experiment folder will have a corresponding output csv file named `ssd512GTDB_epoch<number>_overall.csv`.
+The experiment folder will be in the `ScanSSD/ssd/metrics` directory
+
+### Determining best weight file to use
+After you have obtained weight files you can choose a metric out of 
+```python
+metrics = ['F_0.01', 'P_0.01', 'R_0.01', 'F_0.25', 'P_0.25', 'R_0.25', 'F_0.5', 'P_0.5', 'R_0.5', 'F_0.75', 'P_0.75', 'R_0.75', 'F_1.0', 'P_1.0', 'R_1.0']
+```
+Where `R_0.5` would give the best weight file and recall value at 50% IoU, `F_0.75` would give the best F-score at 75% IoU and so on.
+
+You can use the following:
+```shell
+python3 IOU_lib/get_best.py
+--exp_folder <Path to the CSV outputs>
+--metrics <One or many metrics to compare>
+```
+
+**Note:** Metrics can be one or many. For eg: `--metrics R_0.5 R_0.75` or `--metrics F_0.5`. The program will give you the best weight to use for each metric.
 
 ## Related publications
 
