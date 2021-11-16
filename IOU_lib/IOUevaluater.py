@@ -486,7 +486,10 @@ def IOUeval(ground_truth, detections, outdir=None):
     return scores, detailed_detections
     
 
-def write_final_csv(exp_nm, al_scores, save_dir='src/metrics'):
+def write_final_csv(exp_nm, al_scores, save_dir='ssd/metrics'):
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
     header = [datetime.now(), exp_nm]
     fields = ['Conf', 'F_0.01', 'P_0.01', 'R_0.01', 'F_0.25', 'P_0.25', 'R_0.25',
               'F_0.5', 'P_0.5', 'R_0.5', 'F_0.75', 'P_0.75', 'R_0.75',
@@ -504,6 +507,8 @@ def write_final_csv(exp_nm, al_scores, save_dir='src/metrics'):
             csvwriter.writerow(row_info)
     f.close()
 
+# IMPORTANT: Has to be run from the ScanSSD dir!
+
 if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
@@ -511,6 +516,8 @@ if __name__=='__main__':
     parser.add_argument("--ground_truth", type=str, required=True, help="ground_truth file path")
     parser.add_argument("--det_folder", type=str, default=None,
                         help="In case of multiple confidences enter a folder")
+    parser.add_argument("--exp_name", type=str, default="math_256",
+                        help="Exp Dir to save metrics for each weight file")
     args = parser.parse_args()
     gt_file_name = args.ground_truth
 
@@ -519,12 +526,12 @@ if __name__=='__main__':
         scores, det_dets = IOUeval(gt_file_name, det_file_name, outdir=None)
     else:
         all_scores = {}
-        exp_name = args.det_folder.split('/')[-2]
+        weight_name = args.det_folder.rstrip('/').split('/')[-1]
         dir_names = [direc[0] for direc in os.walk(args.det_folder)][1:]
         for direc in dir_names:
             scores, det_dets = IOUeval(gt_file_name, direc, outdir=None)
             conf_lvl = direc.split('/')[-1].split('_')[-1]
             all_scores[conf_lvl] = scores
-        write_final_csv(exp_name, all_scores)
+        write_final_csv(weight_name, all_scores, 'ssd/metrics/'+args.exp_name)
 
 
