@@ -111,7 +111,7 @@ overlay the grounds truths as well. Run `python modules/ScanSSD/ssd/gtdb/viz_fin
 ```shell
 python src/utils/viz_final_boxes.py 
 --predcsv src/eval/SSD/conf_0.1/Emden76.csv  
---pagenum 0 
+--pagenum 1 
 --imgpath quick_start_data/images/Emden76/2.png
 ```
 
