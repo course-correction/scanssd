@@ -5,8 +5,7 @@ alternative to the original [ScanSSD](https://arxiv.org/abs/2003.08005).
 
 Developed using Cuda 11.2 and Pytorch 1.3.0
 
-<img align="right" src=
-"https://github.com/maliparag/scanssd/blob/master/images/detailed_math512_arch.png" height = 400/>
+<img align="right" src="https://github.com/maliparag/scanssd/blob/master/images/detailed_math512_arch.png" height = 400/>
 
 &nbsp;
 &nbsp;
