@@ -522,8 +522,13 @@ if __name__=='__main__':
     gt_file_name = args.ground_truth
 
     if args.det_folder is None:
+        all_scores = {}
         det_file_name = args.detections
         scores, det_dets = IOUeval(gt_file_name, det_file_name, outdir=None)
+        weight_name = det_file_name.rstrip('/').split('/')[-2]
+        conf_lvl = det_file_name.rstrip('/').split('/')[-1]
+        all_scores[conf_lvl] = scores
+        write_final_csv(weight_name, all_scores, 'ssd/metrics/'+args.exp_name)
     else:
         all_scores = {}
         weight_name = args.det_folder.rstrip('/').split('/')[-1]
