@@ -51,20 +51,21 @@ To generate .pmath files (csv files containing only numbers for bounding-box coo
 
 ```Shell
 python3 src/train.py \
---dataset GTDB --dataset_root quick_start_data \ 
+--dataset GTDB \
+--dataset_root quick_start_data \
 --cuda True \
 --visdom False \
 --batch_size 4 \
 --num_workers 4 \
---exp_name ScanSSD_XY_train \ 
+--exp_name ScanSSD_XY_train \
 --model_type 512 \
 --suffix _512 \
---training_data file_lists/quick_start_train \ 
+--training_data file_lists/quick_start_train \
 --cfg math_gtdb_512 \
 --loss_fun ce \
 --kernel 1 5 \
 --padding 0 2 \
---neg_mining True \ 
+--neg_mining True \
 --stride 0.05 \
 --gpu 0
 ```
@@ -83,20 +84,20 @@ Alternatively, running the makefile to install the pipeline will automatically d
 To test a trained network (Make sure you have added this to PYTHONPATH):
 
 ```Shell
-python3 src/test.py \ 
---save_folder src/eval/ \ 
+python3 src/test.py \
+--save_folder src/eval/ \
 --cuda True \
---dataset_root quick_start_data/ \ 
+--dataset_root quick_start_data/ \
 --model_type 512 \
---trained_model src/trained_weights/ssd512GTDB_256_epoch15.pth \ 
+--trained_model src/trained_weights/ssd512GTDB_256_epoch15.pth \
 --cfg math_gtdb_512 \
 --padding 0 2 \
 --kernel 1 5 \
---batch_size 8 \  
---log_dir src/logs/ \ 
---quick_start_data file_lists/quick_start_data \ 
+--batch_size 8 \
+--log_dir src/logs/ \
+--quick_start_data file_lists/quick_start_data \
 --stride 1.0 \
---post_process 0 \ 
+--post_process 0 \
 --conf 0.1 \
 --gpu 0
 ```
@@ -110,7 +111,7 @@ containing the predictions (in <span style="color:green">green</span>) boxes ove
 
 ```shell
 python src/utils/viz_final_boxes.py \
---predcsv src/eval/SSD/conf_0.1/Emden76.csv \  
+--predcsv src/eval/SSD/conf_0.1/Emden76.csv \
 --pagenum 1 \
 --imgpath quick_start_data/images/Emden76/2.png
 ```
@@ -164,9 +165,9 @@ The entire directory structure should look like:
 ```
 For using IOUevaluater on a folder containing prediction csv files for different epochs at different confidence levels, use the following format for each epoch:
 ```Shell
-python IOU_lib/IOUevaluater.py 
---ground_truth quick_start_data/gt 
---det_folder ssd/eval/<detection_folder>
+python IOU_lib/IOUevaluater.py \
+--ground_truth quick_start_data/gt \
+--det_folder ssd/eval/<detection_folder> \
 --exp_name <Name of Exp Folder>
 ```
 
