@@ -5,15 +5,13 @@ alternative to the original [ScanSSD](https://arxiv.org/abs/2003.08005).
 
 Developed using Cuda 11.2 and Pytorch 1.3.0
 
-&nbsp;
-&nbsp;
-
 ## Table of Contents
 - <a href='#installation'>Installation</a>
 - <a href='#code-organization'>Code Organization</a>
 - <a href='#training-scanssd'>Training</a>
 - <a href='#testing'>Testing</a>
-- <a href='#performance'>Performance</a>
+- <a href='#evaluate'>Evaluate</a>
+- <a href='#related-publications'>Related Publications</a>
 
 ## Installation
 First make sure you have Anaconda3 installed on your system. Then run the following commands
@@ -25,27 +23,27 @@ $ conda activate scanssd
 To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
 ## Code Organization
 
-SSD model is built in `ssd.py`. Training and testing the SSD is managed in `train.py` and `test.py`. All the training code is in `layers` directory. Hyper-parameters for training and testing can be specified through command line and through `config.py` file inside `data` directory. 
+SSD model is built in `ssd.py`. Training and testing the SSD is managed in `train.py` and `test.py`. All the training code is in `layers` directory. Hyper-parameters for training and testing can be specified through command line and through `config.py` file inside `data_loaders` directory. 
 
-`data` directory also contains `gtdb_iterable.py` data reader that uses sliding windows to generates sub-images of page for training. All the scripts for pooling the sub-image level detections and XY Cuts are in `utils` directory. 
+`data_loaders` directory also contains `gtdb_iterable.py` data reader that uses sliding windows to generates sub-images of page for training. All the scripts for pooling the sub-image level detections and XY Cuts are in `utils` directory. 
 
 Functions for data augmentation, visualization of bounding boxes and heatmap are also in `utils`. 
 
 ## Setting up data for training
 
-If you are not sure how to setup data, use [dir_struct directory](https://github.com/MaliParag/ScanSSD/blob/master/dir_struct) file. It has the one of the possible directory structure that you can use for setting up data for training and testing. 
+If you are not sure how to setup data, use [dir_struct directory](https://github.com/MaliParag/ScanSSD/blob/master/dir_struct) file. It shows an example directory structure that you can use for setting up data for training and testing. 
 
 To generate .pmath files (csv files containing only numbers for bounding-box coordinates, 1 per page) or .pchar (same as .pmath but contains character-based box coordinates) files you can use [this](https://github.com/MaliParag/ScanSSD/blob/master/gtdb/split_annotations_per_page.py) script. 
 
 ## Training ScanSSD
 
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
-- By default, we assume you have downloaded the file in the `ssd/base_weights` dir.
+- By default, we assume you have downloaded the file in the `src/base_weights` dir.
 - From the `<root>` of this repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
   You may add this path to your `.bashrc` profile to avoid exporting it everytime.
 
-- Example Run command - For training with TFD-ICDARv2 dataset on GPU 0. 
-
+- Example Run command - For training with a subsample of the TFD-ICDARv2 dataset on GPU 0. 
+- The trained weights will appear in `src/weights_<exp_name>`
 ```Shell
 python3 src/train.py \
 --dataset GTDB \
@@ -73,15 +71,14 @@ python3 src/train.py \
 
 ## Pre-Trained weights
 
-For quick testing, pre-trained weights are available [here.](https://drive.google.com/file/d/1CG8Z6R-BS9SL2ntFo8ruJhWbg8yaIuik/view?usp=sharing).
+For quick testing, pre-trained weights are available [here](https://drive.google.com/file/d/1CG8Z6R-BS9SL2ntFo8ruJhWbg8yaIuik/view?usp=sharing).
 Download and place it in the `src/trained_weights` directory.
-Alternatively, running the makefile to install the pipeline will automatically download the weights.
 
 ## Testing
 To test a trained network (Make sure you have added this to PYTHONPATH):
 
 ```Shell
-python3 src/test.py \
+python3 python3 src/test.py \
 --save_folder src/eval/ \
 --cuda True \
 --dataset_root quick_start_data/ \
@@ -92,7 +89,7 @@ python3 src/test.py \
 --kernel 1 5 \
 --batch_size 8 \
 --log_dir src/logs/ \
---quick_start_data file_lists/quick_start_data \
+--test_data file_lists/quick_start \
 --stride 1.0 \
 --post_process 0 \
 --conf 0.1 \
@@ -102,7 +99,7 @@ python3 src/test.py \
 ### Visualize results
 
 After prediction have been generated you can overlay them over the original image with the script below. You can also optionally 
-overlay the grounds truths as well. Run `python src/gtdb/viz_final_boxes.py --help` for more information. The script will generate an output image
+overlay the grounds truths as well. Run `python src/utils/viz_final_boxes.py --help` for more information. The script will generate an output image
 containing the predictions (in <span style="color:green">green</span>) boxes overlaid with the actual ground-truth boxes
 (in <span style="color:red">red</span>) boxes. The image will be saved in the root directory (from where the program was called).
 
