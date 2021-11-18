@@ -19,6 +19,7 @@ decorator==4.4.2
 defusedxml==0.7.1
 entrypoints==0.3
 pyenchant==3.2.1
+fastapi
 flatbuffers==1.12
 future==0.18.2
 gast==0.4.0
@@ -138,3 +139,4 @@ wheel==0.36.2
 widgetsnbextension==3.5.1
 wrapt==1.12.1
 zipp==3.4.1
+uvicorn[standard]
