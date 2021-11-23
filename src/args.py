@@ -5,7 +5,7 @@ import torch
 import os
 import logging
 
-from data_loaders import GTDB_ROOT
+from src.data_loaders import GTDB_ROOT
 
 
 def parse_test_args() -> argparse.ArgumentParser:

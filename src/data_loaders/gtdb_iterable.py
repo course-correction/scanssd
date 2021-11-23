@@ -146,16 +146,7 @@ class GTDBDetection(data.IterableDataset):
 
             img_id = self.ids[i]
             img = cv2.imread(page_img)
-            img_tensor = DPRLToTensor()(img).type('torch.FloatTensor')
-
-            pad_h = ((math.ceil(img_tensor.shape[1] / self.window))
-                     * self.window) - img_tensor.shape[1]
-            pad_w = ((math.ceil(img_tensor.shape[2] / self.window))
-                     * self.window) - img_tensor.shape[2]
-
-            img_tensor = PadTensor(self.window)(img_tensor)
-            img_windows = GenerateWindows(window=self.window, stride=self.stride)(img_tensor)
-
+            img_windows, pad_h, pad_w = transform(img, self.window, self.stride)
 
             # Yield the windows for the page
             for h in range(img_windows.shape[0]):
@@ -174,15 +165,7 @@ class GTDBDetection(data.IterableDataset):
             page_img = self.image_files[i]
             img = cv2.imread(page_img)
             img_id = self.ids[i]
-            img_tensor = DPRLToTensor()(img).type('torch.FloatTensor')
-
-            # Pad to perfectly fit windows
-            # Get the pad for h and w
-            pad_h = ((math.ceil(img_tensor.shape[1] / self.window))
-                     * self.window) - img_tensor.shape[1]
-            pad_w = ((math.ceil(img_tensor.shape[2] / self.window))
-                     * self.window) - img_tensor.shape[2]
-
+            img_windows, pad_h, pad_w = transform(img, self.window, self.stride)
             # Get GT's
             all_gts = np.genfromtxt(self.ann_files[i], delimiter=',')
             all_gts_ten = torch.from_numpy(all_gts.copy()).type('torch.FloatTensor').reshape((-1, 4))
@@ -193,10 +176,6 @@ class GTDBDetection(data.IterableDataset):
             except IndexError:
                 logging.debug(f'Error in GT ann {self.ann_files[i]}')
                 exit(0)
-
-            img_tensor = PadTensor(self.window)(img_tensor)
-
-            img_windows = GenerateWindows(window=self.window, stride=self.stride)(img_tensor)
 
             # Yield the windows for the page
             for h in range(img_windows.shape[0]):
@@ -242,6 +221,19 @@ class GTDBDetection(data.IterableDataset):
         win_boxes[:, [1, 3]] = (win_boxes[:, [1, 3]] - y_min) / self.window
 
         return win_boxes
+
+
+def transform(img, window, stride):
+    img_tensor = DPRLToTensor()(img).type('torch.FloatTensor')
+
+    pad_h = ((math.ceil(img_tensor.shape[1] / window))
+             * window) - img_tensor.shape[1]
+    pad_w = ((math.ceil(img_tensor.shape[2] / window))
+             * window) - img_tensor.shape[2]
+
+    img_tensor = PadTensor(window)(img_tensor)
+    img_windows = GenerateWindows(window=window, stride=stride)(img_tensor)
+    return img_windows, pad_h, pad_w
 
 
 def worker_init_fn(worker_id):

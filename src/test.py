@@ -22,8 +22,6 @@ from src.data_loaders import *
 import shutil
 from tqdm import tqdm
 import torch.nn as nn
-from src.utils.process_page import process_page
-
 import numpy as np
 from src.utils.process_page import process_page
 

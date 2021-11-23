@@ -19,7 +19,7 @@ from src.utils.stitch_patches_pdf import preprocess_math_regions
 #
 # page numbers start from 0 (e.g., for a six page documents, page nums from 0.00 to 5.00.
 
-def process_page(args, page_data, doc_count, file_name):
+def process_page(args, page_data, doc_count, file_name, return_data = False):
 
     start_time = time.time()
 
@@ -28,9 +28,12 @@ def process_page(args, page_data, doc_count, file_name):
     #logging.debug(">> arg.exp_name: " + args.exp_name)
 
     # Check if detections for the run already exist, then delete the folder to recompute
-    save_folder = os.path.join(args.save_folder,args.exp_name)
-    if os.path.exists(save_folder):
-        shutil.rmtree(save_folder)
+    if not return_data:
+        save_folder = os.path.join(args.save_folder,args.exp_name)
+        if os.path.exists(save_folder):
+            shutil.rmtree(save_folder)
+
+    full_csv = ""
 
     for page in tqdm.tqdm(page_data.keys(), desc="  Processing"):
 
@@ -80,9 +83,14 @@ def process_page(args, page_data, doc_count, file_name):
             # RZ Note: regions are not sorted by page or location on output.
 
             # Save final regions to CSV file.
+            full_csv = full_csv + final_math
+
             math_file = open(math_csv_path, 'a')
             np.savetxt(math_file, final_math, fmt='%.2f', delimiter=',')
             math_file.close()
-    
+
+
     logging.debug("  Merge time: {:.2f} seconds".format(time.time() - start_time))
+    if return_data:
+        return full_csv
     return 0
