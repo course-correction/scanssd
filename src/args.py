@@ -8,6 +8,28 @@ import logging
 from src.data_loaders import GTDB_ROOT
 
 
+def get_gpus() -> Tuple[List[str], int, int]:
+    free = os.popen('nvidia-smi -q -d Memory |grep -A4 GPU|grep Free').read().strip().split('\n')
+    memory_available = [int(f.split()[2]) for f in free]
+    gpus = []
+
+    # AD: Get the min memory from all gpus as the threshold
+    min_mem = min(memory_available)
+    for i, memory in enumerate(memory_available):
+        gpus.append(str(i))
+
+    if min_mem < 6000:
+        logging.warning('WARNING!! Your GPU might not have enough VRAM '
+                        'to run this pipeline')
+    per_gpu_batch_size = max(1, int((min_mem - 5500) / 500))
+
+    num_gpus = len(gpus)
+    return gpus, num_gpus, per_gpu_batch_size
+
+
+devices = get_gpus()
+
+
 def parse_test_args() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="ScanSSD: Scanning Single Shot MultiBox Detector")
     parser.add_argument(
@@ -211,20 +233,3 @@ def parse_train_args():
     return args
 
 
-def get_gpus() -> Tuple[List[str], int, int]:
-    free = os.popen('nvidia-smi -q -d Memory |grep -A4 GPU|grep Free').read().strip().split('\n')
-    memory_available = [int(f.split()[2]) for f in free]
-    gpus = []
-
-    # AD: Get the min memory from all gpus as the threshold
-    min_mem = min(memory_available)
-    for i, memory in enumerate(memory_available):
-        gpus.append(str(i))
-
-    if min_mem < 6000:
-        logging.warning('WARNING!! Your GPU might not have enough VRAM '
-                        'to run this pipeline')
-    per_gpu_batch_size = max(1, int((min_mem - 5500) / 500))
-
-    num_gpus = len(gpus)
-    return gpus, num_gpus, per_gpu_batch_size
