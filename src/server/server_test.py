@@ -1,10 +1,11 @@
 import os.path
-
+from pdf2image import convert_from_path
 import aiohttp
 import asyncio
 import argparse
 import time
 import requests
+from os.path import basename
 
 
 async def aiohttp1(pdf_files, endpoint):
@@ -31,15 +32,26 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--endpoint', default="http://localhost:8000/predict/256")
+    parser.add_argument("--gen_images", help="generate the images from the pdfs",
+                    action="store_true")
     args = parser.parse_args()
 
-    files = ['../../quickstart/pdf/Emden76.pdf',
-             '../../quickstart/pdf/AIF_1999_375_404.pdf',
-             '../../quickstart/pdf/ASENS_1997_367_384.pdf']
-    start = time.time()
+    files = ['../../quick_start_data/pdf/Emden76.pdf',
+             '../../quick_start_data/pdf/AIF_1999_375_404.pdf',
+             '../../quick_start_data/pdf/ASENS_1997_367_384.pdf']
+
+    if args.gen_images:
+        for pdf_file in files:
+            pdf_file_base = basename(pdf_file).strip(".pdf")
+            pdf_images = convert_from_path(pdf_file, dpi=256)
+            os.makedirs(f'../../images_temp/{pdf_file_base}', exist_ok=True)
+            for i, image in enumerate(pdf_images):
+                image.save(f'../../images_temp/{pdf_file_base}/{i}.png', fmt='png')
+
+    '''start = time.time()
     asyncio.run(aiohttp1(files, args.endpoint))
     end = time.time()
-    print(f"time taken to process pdfs async {str(end - start)}")
+    print(f"time taken to process pdfs async {str(end - start)}")'''
 
     start = time.time()
     sync_calls(files, args.endpoint)
