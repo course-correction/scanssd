@@ -1,6 +1,5 @@
 weights*/*
-*/images_temp/
-images_temp/
-images_temp/*/
-**/images_temp/
+
 **/images_temp
+images_temp/*.png
+images_temp/AIF_1999_375_404/
