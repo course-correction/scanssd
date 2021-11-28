@@ -89,7 +89,7 @@ def process_page(args, page_data, doc_count, file_name, return_data=False):
                 if full_csv is None:
                     full_csv = final_math
                 else:
-                    full_csv = np.concatenate((full_csv, final_math), axis=1)
+                    full_csv = np.concatenate((full_csv, final_math), axis=0)
                 #full_csv = full_csv + to_csv(final_math)
             else:
                 math_file = open(math_csv_path, 'a')

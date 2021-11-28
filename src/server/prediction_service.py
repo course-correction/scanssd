@@ -17,8 +17,10 @@ def predict_from_images(args, net, images: List[Image]):
     all_page_windows = {str(page_id+1)+'_'+str(conf): [] for page_id in range(len(cv2_images))
                         for conf in args.conf}
 
+    stride = int(args.stride * args.window)
+
     for img_id, img in enumerate(cv2_images):
-        img_windows, pad_h, pad_w = transform(img, args.window, int(args.stride * args.window))
+        img_windows, pad_h, pad_w = transform(img, args.window, stride)
         for h in range(img_windows.shape[0]):
             for w in range(img_windows.shape[1]):
                 # Resize the window to model input shape
@@ -56,6 +58,7 @@ def pil_to_cv2(pil_images: List[Image]) -> List:
 
 def is_similar(image1, image2):
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
+
 
 def predict_from_win(args, net, windows, h_ids, w_ids, pad_hs, pad_ws, page_ids, all_page_windows):
 
