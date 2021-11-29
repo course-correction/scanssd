@@ -67,7 +67,7 @@ def predict(dpi: int, file: bytes = File(...)):
         iter([outFileAsStr.getvalue()]),
         media_type='text/csv',
         headers={
-            'Content-Disposition': 'attachment;filename=dataset.csv',
+            'Content-Disposition': 'attachment;filename=predictions.csv',
             'Access-Control-Expose-Headers': 'Content-Disposition'
         }
     )
