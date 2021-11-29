@@ -12,20 +12,30 @@ async def aiohttp1(pdf_files, endpoint):
     async with aiohttp.ClientSession() as session:
         coroutines = []
         for pdf in pdf_files:
-            file = {"pdf": open(pdf, 'rb')}
+            print(f"processing of {pdf} started")
+            file = {"file": open(pdf, 'rb')}
             coroutines.append(session.post(endpoint, data=file))
         responses = await asyncio.gather(*coroutines)
-        print(responses)
+        for r, pdf in zip(responses, pdf_files):
+            content = await r.content.read()
+            filename = os.path.basename(pdf).strip('.pdf')
+            with open(f'../../images_temp/async_{filename}.csv', 'wb') as f:
+                f.write(content)
 
 
 def sync_calls(pdf_files, endpoint):
-
     for pdf in pdf_files:
-        filename = os.path.split(pdf)[0]
-        file = {"pdf": (filename, open(pdf, 'rb'), "application/pdf")}
+        filename = os.path.basename(pdf).strip('.pdf')
+        print(f"processing of {pdf} started")
+        file = {"file": (filename, open(pdf, 'rb'), "application/pdf")}
         resp = requests.post(endpoint, files=file)
         if resp.status_code != 200:
             print("request failed!")
+        else:
+            content = resp.content
+            with open(f'../../images_temp/sync_{filename}.csv', 'wb') as f:
+                f.write(content)
+
 
 
 if __name__ == '__main__':
@@ -48,10 +58,11 @@ if __name__ == '__main__':
             for i, image in enumerate(pdf_images):
                 image.save(f'../../images_temp/{pdf_file_base}/{i}.png', fmt='png')
 
-    '''start = time.time()
-    asyncio.run(aiohttp1(files, args.endpoint))
+    start = time.time()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(aiohttp1(files, args.endpoint))
     end = time.time()
-    print(f"time taken to process pdfs async {str(end - start)}")'''
+    print(f"time taken to process pdfs async {str(end - start)}")
 
     start = time.time()
     sync_calls(files, args.endpoint)
