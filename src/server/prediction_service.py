@@ -79,7 +79,6 @@ def predict_from_win(args, net, windows, h_ids, w_ids, pad_hs, pad_ws, page_ids,
     for idx, (h_id, w_id, pad_h, pad_w, page_id) in \
             enumerate(zip(h_ids, w_ids, pad_hs, pad_ws, page_ids)):
 
-        #print(idx, h_id, w_id, pad_h, pad_w, page_id)
         img_id = page_id + 1
         y_l = h_id * base_offset
         x_l = w_id * base_offset

@@ -61,10 +61,10 @@ def predict(dpi: int, file: bytes = File(...)):
     images = convert_from_bytes(pdf_file=file, dpi=dpi)
     ret = predict_from_images(local_args, net, images)
     ret = pd.DataFrame(ret)
-    outFileAsStr = StringIO()
-    ret.to_csv(outFileAsStr, index=False, header=False)
+    out_file_as_str = StringIO()
+    ret.to_csv(out_file_as_str, index=False, header=False, float_format='%.2f')
     response = StreamingResponse(
-        iter([outFileAsStr.getvalue()]),
+        iter([out_file_as_str.getvalue()]),
         media_type='text/csv',
         headers={
             'Content-Disposition': 'attachment;filename=predictions.csv',
