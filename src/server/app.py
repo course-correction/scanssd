@@ -1,4 +1,5 @@
-from io import BytesIO, StringIO
+from io import StringIO
+import copy
 import pandas as pd
 from fastapi import FastAPI, File
 from src.ssd import build_ssd
@@ -56,9 +57,9 @@ def read_root():
 
 @app.post("/predict/{dpi}")
 def predict(dpi: int, file: bytes = File(...)):
-
+    local_args = copy.deepcopy(args)
     images = convert_from_bytes(pdf_file=file, dpi=dpi)
-    ret = predict_from_images(args, net, images)
+    ret = predict_from_images(local_args, net, images)
     ret = pd.DataFrame(ret)
     outFileAsStr = StringIO()
     ret.to_csv(outFileAsStr, index=False, header=False)
