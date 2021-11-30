@@ -1,0 +1,14 @@
+echo "comparing AIF sync vs async"
+diff images_temp/async_AIF_1999_375_404.csv images_temp/sync_AIF_1999_375_404.csv
+echo "comparing AIF local vs async"
+diff images_temp/async_AIF_1999_375_404.csv src/eval/SSD/conf_0.5/AIF_1999_375_404.csv
+
+echo "comparing ASENS sync vs async"
+diff images_temp/async_ASENS_1997_367_384.csv images_temp/sync_ASENS_1997_367_384.csv
+echo "comparing ASENS local vs async"
+diff images_temp/async_ASENS_1997_367_384.csv src/eval/SSD/conf_0.5/ASENS_1997_367_384.csv
+
+echo "comparing Emden sync vs async"
+diff images_temp/async_Emden76.csv images_temp/sync_Emden76.csv
+echo "comparing Emden local vs async"
+diff images_temp/async_Emden76.csv src/eval/SSD/conf_0.5/Emden76.csv
