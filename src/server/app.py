@@ -26,7 +26,7 @@ args = parser.parse_args(["--model_type", "512",
                           "--batch_size", str(gpu_data[2]),
                           "--conf", SCANSSD_CONF,
                           "--window", "512",
-                          "--gpu", ' '.join(gpu_data[0]),
+                          "--gpu", *' '.join(gpu_data[0]),
                           "--stride", "1.0",
                           "--trained_model","../trained_weights/ssd512GTDB_256_epoch15.pth"])
 
