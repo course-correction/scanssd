@@ -47,8 +47,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     files = ['../../quick_start_data/pdf/Emden76.pdf',
-             '../../quick_start_data/pdf/AIF_1999_375_404.pdf']
-            # '../../quick_start_data/pdf/ASENS_1997_367_384.pdf']
+             '../../quick_start_data/pdf/AIF_1999_375_404.pdf',
+             '../../quick_start_data/pdf/ASENS_1997_367_384.pdf']
 
     os.makedirs(f'../../images_temp/', exist_ok=True)
     if args.gen_images:
