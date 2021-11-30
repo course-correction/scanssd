@@ -1,7 +1,7 @@
 from typing import List
 from PIL.Image import Image
 
-from server.utils.batch_utils import Batch
+from src.server.utils.batch_utils import Batch
 from src.data_loaders.gtdb_iterable import transform
 import torch
 import torch.nn.functional as F
