@@ -1,5 +1,7 @@
 from typing import List
 from PIL.Image import Image
+
+from server.utils.batch_utils import Batch
 from src.data_loaders.gtdb_iterable import transform
 import torch
 import torch.nn.functional as F
@@ -18,7 +20,8 @@ def predict_from_images(args, net, images: List[Image]):
                         for conf in args.conf}
 
     stride = int(args.stride * args.window)
-
+    batch_counter = 0
+    cur_batch = Batch()
     for img_id, img in enumerate(cv2_images):
         img_windows, pad_h, pad_w = transform(img, args.window, stride)
         for h in range(img_windows.shape[0]):
@@ -28,20 +31,25 @@ def predict_from_images(args, net, images: List[Image]):
                 windows = F.interpolate(windows, size=size,
                                         mode='area').squeeze()
                 windows -= mean
-                # Yield testing data_loaders
-                # torch.cat((torch.tensor(9).unsqueeze(0), torch.tensor(9).clone().unsqueeze(0)))
-                # yield h, w, pad_h, pad_w, tgt_win, img_id
                 windows = torch.unsqueeze(windows, dim=0)
-                predict_from_win(
-                    args,
-                    net,
-                    windows,
-                    torch.tensor(h).unsqueeze(0),
-                    torch.tensor(w).unsqueeze(0),
-                    torch.tensor(pad_h).unsqueeze(0),
-                    torch.tensor(pad_w).unsqueeze(0),
-                    torch.tensor(img_id).unsqueeze(0),
-                    all_page_windows)
+
+                cur_batch.add_to_batch(windows, h, w, pad_h, pad_w, img_id)
+                batch_counter = batch_counter + 1
+                if batch_counter == args.batch_size:
+                    predict_from_win(
+                        args,
+                        net,
+                        cur_batch,
+                        all_page_windows)
+                    batch_counter = 0
+                    cur_batch = Batch()
+
+    if cur_batch.windows is not None:
+        predict_from_win(
+            args,
+            net,
+            cur_batch,
+            all_page_windows)
 
     return process_page(args, all_page_windows, 1, "", True)
 
@@ -60,7 +68,14 @@ def is_similar(image1, image2):
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 
-def predict_from_win(args, net, windows, h_ids, w_ids, pad_hs, pad_ws, page_ids, all_page_windows):
+def predict_from_win(args, net, batch: Batch, all_page_windows):
+    print("predicting")
+    windows = batch.windows
+    h_ids = batch.h
+    w_ids = batch.w
+    pad_hs = batch.pad_h
+    pad_ws = batch.pad_w
+    page_ids = batch.img_id
 
     gpus = [str(gpu_id) for gpu_id in args.gpu]
     gpus = ','.join(gpus)
@@ -88,7 +103,7 @@ def predict_from_win(args, net, windows, h_ids, w_ids, pad_hs, pad_ws, page_ids,
 
         for conf in args.conf:
             img_detections = detections[idx, 1, :, :]
-            # Thredshold detections
+            # Threshold detections
             recognized_scores = img_detections[:,0]
             valid_mask = recognized_scores >= conf
             recognized_scores = recognized_scores[valid_mask]
