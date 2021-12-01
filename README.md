@@ -112,6 +112,8 @@ If installed using makefile, run `make test-example`. The outputs should be gene
 
 ### Visualize results
 
+**Note:** If you have used makefile to generate predictions, activate conda first by using `conda activate scanssd` to make sure all the package dependencies are met.
+
 After prediction have been generated you can overlay them over the original image with the script below. You can also optionally 
 overlay the grounds truths as well. Run `python src/utils/viz_final_boxes.py --help` for more information. The script will generate an output image
 containing the predictions (in <span style="color:green">green</span>) boxes overlaid with the actual ground-truth boxes
@@ -119,7 +121,7 @@ containing the predictions (in <span style="color:green">green</span>) boxes ove
 
 ```shell
 python src/utils/viz_final_boxes.py \
---predcsv src/eval/SSD/conf_0.1/Emden76.csv \
+--predcsv src/eval/SSD/conf_0.5/Emden76.csv \
 --pagenum 1 \
 --imgpath quick_start_data/images/Emden76/2.png
 ```
