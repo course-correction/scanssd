@@ -41,6 +41,7 @@ If you are not sure how to setup data, use [dir_struct directory](https://github
 To generate .pmath files (csv files containing only numbers for bounding-box coordinates, 1 per page) or .pchar (same as .pmath but contains character-based box coordinates) files you can use [this](https://github.com/MaliParag/ScanSSD/blob/master/gtdb/split_annotations_per_page.py) script. 
 
 ## Training ScanSSD
+### Manually
 
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
 - By default, we assume you have downloaded the file in the `src/base_weights` dir.
@@ -69,6 +70,8 @@ python3 src/train.py \
 --stride 0.05 \
 --gpu 0
 ```
+### Using Makefile
+If installed using Makefile, run `make train-example`. This should start the training automatically on the example PDF document. The weights per epoch would be saved in the `ScanSSD_XY_train` folder.
 
 - Note:
   * For training, an NVIDIA GPU is strongly recommended for speed.
