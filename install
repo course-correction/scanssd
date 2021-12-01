@@ -1,0 +1,108 @@
+#!/bin/bash
+
+################################################################
+# install     - Bash script
+# MathSeer Pipeline Installation Script
+#
+# Original Author: R. Zanibbi (dprl, RIT, USA - Dec 1, 2021)
+################################################################
+
+##################################
+# Functions
+##################################
+
+# Report message
+mymsg () {
+	echo "    >> $@"
+	echo ""
+}
+
+# Initial message
+echo "Scanssd Installation Script"
+echo "-------------------------------------"
+if [ $# -gt 0 ]
+then
+	echo "** Force mode: will continue after errors ** (argument passed)"
+fi
+
+# Pass number of arguments sent to outer script and success message to invoke.
+testSuccess () {
+	if [ $? -ne 0 ]
+	then
+		echo ""
+		echo "** Installation error ** -- please review error messages above."
+
+		# Pass any additional argument, program will not halt.
+		if [ $1 -eq 0 ]
+		then
+			exit $?
+		else
+			echo "** Continuing..."
+			echo ""
+		fi
+	else
+		# Success.
+		mymsg $2
+	fi
+}
+
+##################################
+# Data downloading
+##################################
+
+# Download weight files from DPRL for ScanSSD and QD-GGA
+SSDW="ssd512GTDB_256_epoch15.pth"
+
+echo "[ Downloading ScanSSD-XYc weights ]"
+if [ -f ./src/trained_weights/${SSDW} ]
+then
+	mymsg "ScanSSD -XYc weights already downloaded."
+else
+	wget -q https://www.cs.rit.edu/~dprl/mathseer-pipeline/${SSDW}
+	mv ${SSDW} ./src/trained_weights/
+	testSuccess $# "ScanSSD-XYc weights downloaded successfully."
+fi
+
+# Set up Conda environment
+echo "[ Creating Conda Python Environment (ScanSSD-XYc) ]"
+
+CENV=`conda info --envs`
+if grep -w "scanssd" <<< "$CENV"
+then
+	mymsg "Conda scanssd environment already created."
+else
+	conda create -y -n scanssd python=3.6.9
+	testSuccess $# "Environment (scanssd) created successfully."
+	CONDSH=`conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh
+	source $CONDSH
+	conda activate scanssd
+
+	# TO DO: Convert to use conda.
+	pip install -r requirements.txt
+	testSuccess $# "Additional packages installed successfully."
+	conda deactivate
+fi
+
+# Generate mprun script with LgEval and conda configuration.
+# DEBUG: Conda must be installed first for conda envs to be defined.
+echo "[ Generating mprun script ]"
+if [ -f ./mprun ]
+then
+	mymsg "mprun script already created."
+else
+	MSPATH=`pwd`
+
+	echo "#!/bin/bash" > mprun
+	echo "" >> mprun
+	echo source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh >> mprun
+	echo "export PYTHONPATH=${MSPATH}:${MSPATH}/src:${PYTHONPATH}" >> mprun
+	echo "conda activate scanssd" >> mprun
+
+	echo "" >> mprun
+	echo "python  src/test.py \$@" >> mprun
+	echo "" >> mprun
+	echo "conda deactivate" >> mprun
+
+	chmod ug+x ./mprun  # make executable
+	mymsg "done."
+fi

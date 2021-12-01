@@ -14,12 +14,17 @@ Developed using Cuda 11.2 and Pytorch 1.3.0
 - <a href='#related-publications'>Related Publications</a>
 
 ## Installation
+### Manually (Using Conda)
 First make sure you have Anaconda3 installed on your system. Then run the following commands
 ```zsh
 $ conda create -n scanssd python=3.6.9
 $ conda activate scanssd
 (scanssd) $ pip install -r requirements.txt
 ```
+### Using Makefile (Conda Required)
+From the root of this repo run `make`. It will setup all the required environments and paths
+as needed and download the pre-trained weights.
+
 To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
 ## Code Organization
 
@@ -74,7 +79,10 @@ python3 src/train.py \
 For quick testing, pre-trained weights are available [here](https://drive.google.com/file/d/1CG8Z6R-BS9SL2ntFo8ruJhWbg8yaIuik/view?usp=sharing).
 Download and place it in the `src/trained_weights` directory.
 
+**Note:** Skip this step if ScanSSD-XYc installed using _Makefile_.
+
 ## Testing
+### Manually
 To test a trained network (Make sure you have added this to PYTHONPATH):
 
 ```Shell
@@ -95,6 +103,9 @@ python3 src/test.py \
 --conf 0.5 \
 --gpu 0
 ```
+### Using Makefile
+If installed using makefile, run `make test-example`. The outputs should be generated in
+`src/eval/SSD`.
 
 ### Visualize results
 
