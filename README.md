@@ -84,6 +84,11 @@ Download and place it in the `src/trained_weights` directory.
 
 **Note:** Skip this step if ScanSSD-XYc installed using _Makefile_.
 
+### Visualizing Training Using TensorBoard
+While training is in progress, you can visualize the training trends in Tensorboard. To use TensorBoard, in a separate terminal, from the root of this repo run:
+
+`tensorboard --logdir=src/TensorBoard_Logs/ScanSSD_XY_train`
+
 ## Testing
 ### Manually
 To test a trained network (Make sure you have added this to PYTHONPATH):

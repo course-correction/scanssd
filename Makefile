@@ -31,6 +31,7 @@ clean:
 	rm -f ./src/trained_weights/${SSDW}
 	rm -rf ./src/eval/SSD/
 	rm -rf ./src/weights_ScanSSD_XY_train/
+	rm -rf ./src/TensorBoard_Logs/*
 	conda env remove -n scanssd
 
 # 'make clean-example'

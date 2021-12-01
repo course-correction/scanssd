@@ -7,6 +7,7 @@ import os
 import sys
 import torch
 from torch.autograd import Variable
+from torch.utils.tensorboard import SummaryWriter
 import torch.nn as nn
 import torch.optim as optim
 import torch.backends.cudnn as cudnn
@@ -27,6 +28,9 @@ def train(args):
     cfg = exp_cfg[args.cfg]
     dataset = GTDBDetection(args, args.training_data, split='train',
                             transform=SSDAugmentation(cfg['min_dim']), mean=MEANS)
+
+    # TBWriter
+    writer = SummaryWriter('src/TensorBoard_Logs/' + args.exp_name)
 
     # if args.visdom:
     #     import visdom
@@ -126,8 +130,15 @@ def train(args):
                                   collate_fn=detection_collate)
 
     logging.debug('Training set size is {}'.format(dataset.tot))
+    logging.debug('Creating tensorboard graph')
 
-    # create batch iterator
+    # Create one batch iterator for Tensorboard
+    batch_iterator = iter(data_loader)
+    images, targets = next(batch_iterator)
+    images = images.cuda()
+    writer.add_graph(ssd_net, images)
+
+    # Run training
     for epoch in range(cfg['max_epochs']):
         logging.debug(f'Epoch: {epoch+1}')
         for iteration, (images, targets) in enumerate(data_loader):
@@ -162,6 +173,9 @@ def train(args):
                 logging.debug('timer: %.4f sec.' % (t1 - t0))
                 logging.debug('iter ' + repr(iteration) + ' || Loss: %.3f ||' % (loss.item()) +
                               ' Epoch: ' + repr(epoch+1))
+                writer.add_scalar('Training_Box_Loss', loss_l, iteration+(epoch_size*epoch))
+                writer.add_scalar('Training_Classification_Loss', loss_c, iteration+(epoch_size*epoch))
+                writer.add_scalar('Training_Total_Loss', loss, iteration+(epoch_size*epoch))
 
                 if args.validation_data != '':
                     # Validate data_loaders
