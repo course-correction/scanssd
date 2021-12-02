@@ -1,0 +1,1 @@
+docker run --gpus all -p 8000:80 dprl/scanssd:latest
