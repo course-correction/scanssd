@@ -78,7 +78,7 @@ Download and place it in the `src/trained_weights` directory.
 To test a trained network (Make sure you have added this to PYTHONPATH):
 
 ```Shell
-python3 python3 src/test.py \
+python3 src/test.py \
 --save_folder src/eval/ \
 --cuda True \
 --dataset_root quick_start_data/ \
@@ -87,12 +87,12 @@ python3 python3 src/test.py \
 --cfg math_gtdb_512 \
 --padding 0 2 \
 --kernel 1 5 \
---batch_size 8 \
+--batch_size 4 \
 --log_dir src/logs/ \
 --test_data file_lists/quick_start \
 --stride 1.0 \
 --post_process 0 \
---conf 0.1 \
+--conf 0.5 \
 --gpu 0
 ```
 
