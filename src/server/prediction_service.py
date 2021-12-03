@@ -69,6 +69,7 @@ def is_similar(image1, image2):
 
 
 def predict_from_win(args, net, batch: Batch, all_page_windows):
+
     windows = batch.windows
     h_ids = batch.h
     w_ids = batch.w
