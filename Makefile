@@ -31,7 +31,7 @@ clean:
 	rm -f ./src/trained_weights/${SSDW}
 	rm -rf ./src/eval/SSD/
 	rm -rf ./src/weights_ScanSSD_XY_train/
-	conda env remove -n scanssd
+#conda env remove -n scanssd
 
 # 'make clean-example'
 clean-outputs:

@@ -139,4 +139,5 @@ src/TensorBoard_Logs/*
 ssdrun
 ssdrun-train
 *.png
+src/weights_*
 
