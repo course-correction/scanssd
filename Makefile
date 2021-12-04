@@ -32,7 +32,7 @@ clean:
 	rm -rf ./src/eval/SSD/
 	rm -rf ./src/weights_ScanSSD_XY_train/
 	rm -rf ./src/TensorBoard_Logs/*
-	conda env remove -n scanssd
+#conda env remove -n scanssd
 
 # 'make clean-example'
 clean-outputs:

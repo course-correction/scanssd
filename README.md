@@ -19,16 +19,17 @@ We highly recommend using conda for using this system as it will be easier to do
 automate the training and testing routines.** 
 
 First make sure you have Anaconda3 installed on your system. Then run the following commands (manually or automatically using _Makefile_).
-### Manually
 
+### Using Makefile
+From the root of this repo run `make`. It will setup all the required environments and paths
+as needed and download the pre-trained weights.
+
+### Manually
 ```zsh
 $ conda create -n scanssd python=3.6.9
 $ conda activate scanssd
 (scanssd) $ pip install -r requirements.txt
 ```
-### Using Makefile
-From the root of this repo run `make`. It will setup all the required environments and paths
-as needed and download the pre-trained weights.
 
 To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
 ## Code Organization
@@ -46,8 +47,10 @@ If you are not sure how to setup data, use [dir_struct directory](https://github
 To generate .pmath files (csv files containing only numbers for bounding-box coordinates, 1 per page) or .pchar (same as .pmath but contains character-based box coordinates) files you can use [this](https://github.com/MaliParag/ScanSSD/blob/master/gtdb/split_annotations_per_page.py) script. 
 
 ## Training ScanSSD
-### Manually
+### Using Makefile
+If installed using Makefile, run `make train-example`. This should start the training automatically on the example PDF document. The weights per epoch would be saved in the `ScanSSD_XY_train` folder.
 
+### Manually
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
 - By default, we assume you have downloaded the file in the `src/base_weights` dir.
 - From the `<root>` of this repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
@@ -75,8 +78,6 @@ python3 src/train.py \
 --stride 0.05 \
 --gpu 0
 ```
-### Using Makefile
-If installed using Makefile, run `make train-example`. This should start the training automatically on the example PDF document. The weights per epoch would be saved in the `ScanSSD_XY_train` folder.
 
 ### Visualizing Training Using TensorBoard
 While training is in progress, you can visualize the training trends in Tensorboard. To use TensorBoard, in a separate terminal, from the root of this repo run:
@@ -94,6 +95,10 @@ For quick testing, pre-trained weights are available [here](https://drive.google
 Download and place it in the `src/trained_weights` directory.
 
 **Note:** Skip this step if ScanSSD-XYc installed using _Makefile_.
+
+### Using Makefile
+If installed using makefile, run `make test-example`. The outputs should be generated in
+`src/eval/SSD`.
 
 ### Manually
 To test a trained network (Make sure you have added this to PYTHONPATH):
@@ -116,9 +121,6 @@ python3 src/test.py \
 --conf 0.5 \
 --gpu 0
 ```
-### Using Makefile
-If installed using makefile, run `make test-example`. The outputs should be generated in
-`src/eval/SSD`.
 
 ### Visualize results
 
@@ -149,7 +151,7 @@ From the root directory:
 ```Shell
 python3 IOU_lib/IOUevaluater.py \
 --ground_truth quick_start_data/gt/ \
---detections src/eval/SSD/conf_0.1/ \
+--detections src/eval/SSD/conf_0.5/ \
 --exp_name ScanSSD_XY
 ```
 
