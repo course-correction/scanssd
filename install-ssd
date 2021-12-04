@@ -85,46 +85,46 @@ fi
 
 # Generate mprun-test and training script conda configuration.
 # DEBUG: Conda must be installed first for conda envs to be defined.
-echo "[ Generating mprun script ]"
-if [ -f ./mprun ]
+echo "[ Generating ssdrun script ]"
+if [ -f ./ssdrun ]
 then
-	mymsg "mprun script already created."
+	mymsg "ssdrun script already created."
 else
 	MSPATH=`pwd`
 
-	echo "#!/bin/bash" > mprun
-	echo "" >> mprun
-	echo source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh >> mprun
-	echo "export PYTHONPATH=${MSPATH}:${MSPATH}/src:${PYTHONPATH}" >> mprun
-	echo "conda activate scanssd" >> mprun
+	echo "#!/bin/bash" > ssdrun
+	echo "" >> ssdrun
+	echo source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh >> ssdrun
+	echo "export PYTHONPATH=${MSPATH}:${MSPATH}/src:${PYTHONPATH}" >> ssdrun
+	echo "conda activate scanssd" >> ssdrun
 
-	echo "" >> mprun
-	echo "python  src/test.py \$@" >> mprun
-	echo "" >> mprun
-	echo "conda deactivate" >> mprun
+	echo "" >> ssdrun
+	echo "python  src/test.py \$@" >> ssdrun
+	echo "" >> ssdrun
+	echo "conda deactivate" >> ssdrun
 
-	chmod ug+x ./mprun  # make executable
+	chmod ug+x ./ssdrun  # make executable
 	mymsg "done creating test script"
 fi
 
-echo "[ Generating mprun-train script ]"
-if [ -f ./mprun-train ]
+echo "[ Generating ssdrun-train script ]"
+if [ -f ./ssdrun-train ]
 then
-	mymsg "mprun-train script already created."
+	mymsg "ssdrun-train script already created."
 else
 	MSPATH=`pwd`
 
-	echo "#!/bin/bash" > mprun-train
-	echo "" >> mprun-train
-	echo source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh >> mprun-train
-	echo "export PYTHONPATH=${MSPATH}:${MSPATH}/src:${PYTHONPATH}" >> mprun-train
-	echo "conda activate scanssd" >> mprun-train
+	echo "#!/bin/bash" > ssdrun-train
+	echo "" >> ssdrun-train
+	echo source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh >> ssdrun-train
+	echo "export PYTHONPATH=${MSPATH}:${MSPATH}/src:${PYTHONPATH}" >> ssdrun-train
+	echo "conda activate scanssd" >> ssdrun-train
 
-	echo "" >> mprun-train
-	echo "python  src/train.py \$@" >> mprun-train
-	echo "" >> mprun-train
-	echo "conda deactivate" >> mprun-train
+	echo "" >> ssdrun-train
+	echo "python  src/train.py \$@" >> ssdrun-train
+	echo "" >> ssdrun-train
+	echo "conda deactivate" >> ssdrun-train
 
-	chmod ug+x ./mprun-train  # make executable
+	chmod ug+x ./ssdrun-train  # make executable
 	mymsg "done creating train script"
 fi
