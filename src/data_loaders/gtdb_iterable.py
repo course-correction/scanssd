@@ -83,7 +83,7 @@ class GTDBDetection(data.IterableDataset):
                     image_files.append(self.root + "/images/" + line.strip() + ".png")
             elif args.op_mode == 'pipeline':
                 for line in open(osp.join(self.root, self.data_file)):
-                    image_files.extend(glob(self.root + "/images/" + line.strip() + "/*.png"))
+                    image_files.extend(sorted(glob(self.root + "/images/" + line.strip() + "/*.png")))
             else:
                 raise Exception(f'Invalid output mode selected {args.op_mode}. '
                                 f'Use \'dev\' or \'pipeline\'')

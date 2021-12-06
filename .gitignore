@@ -141,3 +141,4 @@ ssdrun-train
 *.png
 src/weights_*
 
+bin/ssdserver-test
