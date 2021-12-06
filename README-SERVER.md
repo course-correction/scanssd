@@ -1,4 +1,5 @@
-#ScanSSD Server
+# ScanSSD Server
+
 This document is a supplement to the Main Readme provided in this repo. It describes how ScanSSD
 may be deployed as a server which can accept PDFs, and return information about their bounding boxes.
 It is built on that work and all acknowledgements and citations listed in the main Readme 
