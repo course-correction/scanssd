@@ -63,7 +63,7 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(aiohttp1(files, args.endpoint))
     end = time.time()
-    print(f"time taken to process pdfs async {str(end - start)}")
+    print(f"time taken to process pdfs async {str(end - start)}\n")
 
     start = time.time()
     sync_calls(files, args.endpoint)
