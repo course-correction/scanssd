@@ -32,11 +32,11 @@ def viz_boxes(pred_csv=None, gt_csv=None, page_num=1, img_path=''):
 
     if pred_csv:
         pred_data = load_data(pred_csv, page_num)
-        img = draw_rects(img, pred_data, (0, 255, 0), 10)
+        img = draw_rects(img, pred_data, (0, 255, 0), 3)
 
     if gt_csv:
         gt_data = load_data(gt_csv, page_num)
-        img = draw_rects(img, gt_data, (255, 0, 0), 3)
+        img = draw_rects(img, gt_data, (255, 0, 0), 2)
 
     plt.imshow(img)
     # plt.show()

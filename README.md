@@ -13,13 +13,24 @@ Developed using Cuda 11.2 and Pytorch 1.3.0
 - <a href='#evaluate'>Evaluate</a>
 - <a href='#related-publications'>Related Publications</a>
 
-## Installation
-First make sure you have Anaconda3 installed on your system. Then run the following commands
+## Installation (Conda)
+We highly recommend using conda for using this system as it will be easier to download and install all the required dependencies. You can either choose to install the packages manually or using *Makefile*.
+**Using the *Makefile* option will automatically install the conda environment, install the required dependencies, download the pre-trained weights and 
+automate the training and testing routines.** 
+
+First make sure you have Anaconda3 installed on your system. Then run the following commands (manually or automatically using _Makefile_).
+
+### Using Makefile
+From the root of this repo run `make`. It will setup all the required environments and paths
+as needed and download the pre-trained weights.
+
+### Manually
 ```zsh
 $ conda create -n scanssd python=3.6.9
 $ conda activate scanssd
 (scanssd) $ pip install -r requirements.txt
 ```
+
 To run using the GTDB dataset, Download the dataset by following the instructions on (https://github.com/MaliParag/TFD-ICDAR2019).
 ## Code Organization
 
@@ -29,14 +40,17 @@ SSD model is built in `ssd.py`. Training and testing the SSD is managed in `trai
 
 Functions for data augmentation, visualization of bounding boxes and heatmap are also in `utils`. 
 
-## Setting up data for training
+## Setting up your own data for training
 
 If you are not sure how to setup data, use [dir_struct directory](https://github.com/MaliParag/ScanSSD/blob/master/dir_struct) file. It shows an example directory structure that you can use for setting up data for training and testing. 
 
 To generate .pmath files (csv files containing only numbers for bounding-box coordinates, 1 per page) or .pchar (same as .pmath but contains character-based box coordinates) files you can use [this](https://github.com/MaliParag/ScanSSD/blob/master/gtdb/split_annotations_per_page.py) script. 
 
 ## Training ScanSSD
+### Using Makefile
+If installed using Makefile, run `make train-example`. This should start the training automatically on the example PDF document. The weights per epoch would be saved in the `ScanSSD_XY_train` folder.
 
+### Manually
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
 - By default, we assume you have downloaded the file in the `src/base_weights` dir.
 - From the `<root>` of this repo, export PYTHONPATH: `export PYTHONPATH="${PYTHONPATH}:${PWD}"`
@@ -69,12 +83,19 @@ python3 src/train.py \
   * For training, an NVIDIA GPU is strongly recommended for speed.
   * You can pick-up training from a checkpoint by specifying the path as one of the training parameters (again, see `train.py` for options)
 
+## Testing
 ## Pre-Trained weights
 
 For quick testing, pre-trained weights are available [here](https://drive.google.com/file/d/1CG8Z6R-BS9SL2ntFo8ruJhWbg8yaIuik/view?usp=sharing).
 Download and place it in the `src/trained_weights` directory.
 
-## Testing
+**Note:** Skip this step if ScanSSD-XYc installed using _Makefile_.
+
+### Using Makefile
+If installed using makefile, run `make test-example`. The outputs should be generated in
+`src/eval/SSD`.
+
+### Manually
 To test a trained network (Make sure you have added this to PYTHONPATH):
 
 ```Shell
@@ -98,6 +119,8 @@ python3 src/test.py \
 
 ### Visualize results
 
+**Note:** If you have used makefile to generate predictions, activate conda first by using `conda activate scanssd` to make sure all the package dependencies are met.
+
 After prediction have been generated you can overlay them over the original image with the script below. You can also optionally 
 overlay the grounds truths as well. Run `python src/utils/viz_final_boxes.py --help` for more information. The script will generate an output image
 containing the predictions (in <span style="color:green">green</span>) boxes overlaid with the actual ground-truth boxes
@@ -105,12 +128,15 @@ containing the predictions (in <span style="color:green">green</span>) boxes ove
 
 ```shell
 python src/utils/viz_final_boxes.py \
---predcsv src/eval/SSD/conf_0.1/Emden76.csv \
+--predcsv src/eval/SSD/conf_0.5/Emden76.csv \
+--gtcsv quick_start_data/gt/Emden76.csv \
 --pagenum 1 \
 --imgpath quick_start_data/images/Emden76/2.png
 ```
 
-## Evaluate 
+## Evaluate
+You need to activate the conda environment if not already done so (`conda activate scanssd`).
+
 You can evaluate the detections compared to the ground truth. The csv's should be named after
 the pdf document names and should contain the boxes in the format:
 
@@ -120,7 +146,7 @@ From the root directory:
 ```Shell
 python3 IOU_lib/IOUevaluater.py \
 --ground_truth quick_start_data/gt/ \
---detections src/eval/SSD/conf_0.1/ \
+--detections src/eval/SSD/conf_0.5/ \
 --exp_name ScanSSD_XY
 ```
 
