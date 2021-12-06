@@ -12,7 +12,7 @@ class Batch:
         self.img_id = None
 
     def add_to_batch(self, windows: torch.Tensor, h: int, w: int, pad_h: int, pad_w: int, img_id: int):
-        print("adding to batch")
+
         if self.windows is None:
             self.windows = windows
         else:

@@ -1,0 +1,19 @@
+image: docker:stable
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+build-generic:
+  stage: build
+  only:
+    - main
+    - 2-scanssd-containerize-fastapi
+  script:
+    - echo building docker image $CI_COMMIT_BRANCH
+    - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+    - docker build . -t scanssd:latest
+    - docker tag scanssd:latest dprl/scanssd:latest
+    - docker push dprl/scanssd:latest
