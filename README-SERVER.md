@@ -43,7 +43,8 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 You can then go to the swagger docs URL ([http://localhost:8000/docs](http://localhost:8000/docs)) 
 to interact with the server (e.g., passing PDF files to check CSV output).  
 
-Requests can also be made from the command line using Curl commands
+Requests can also be made from the command line using Curl commands, for example:
+
 ```shell
 curl -X 'POST' \
   'http://localhost:8000/predict/256' \
@@ -51,6 +52,10 @@ curl -X 'POST' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@math.pdf;type=application/pdf'
 ```
+will run ScanSSD-XYc over a test page image, and return a list of page numbers and 
+bounding boxes at the terminal. All values are floating point numbers (including
+page number '0' as '0.00').
+
 `ctrl-c` should stop the service in linux/unix shells.
 
 ### Testing Server
