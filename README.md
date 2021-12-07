@@ -4,7 +4,7 @@
 [Dcoument and Pattern Recognition Lab (dprl)](https://www.cs.rit.edu/~dprl), Rochester Institute of Technology, USA
 
 A [PyTorch](http://pytorch.org/) implementation of ScanSSD-XYc
-[(Link)](https://www.cs.rit.edu/~rlaz/files/ScanSSDv2.pdf) by **Abhisek Dey**.
+[(GREC paper)](https://www.cs.rit.edu/~rlaz/files/ScanSSDv2.pdf) by **Abhisek Dey**.
 It was developed using SSD implementation by [**Max
 deGroot**](https://github.com/amdegroot) and is a lighter, more efficient
 alternative to the original [ScanSSD](https://github.com/MaliParag/ScanSSD)
@@ -234,11 +234,11 @@ python IOU_lib/get_best.py \
 
 ## Related publications
 
-Dey, Abhisek et al. "ScanSSD-XYc: Faster Detection of Math Formulas", GREC 2021 [link](https://www.cs.rit.edu/~rlaz/files/ScanSSDv2.pdf).
+Dey, Abhisek et al. ["ScanSSD-XYc: Faster Detection of Math Formulas"](https://www.cs.rit.edu/~rlaz/files/ScanSSDv2.pdf), GREC 2021.
 
 Mali, Parag, et al. “ScanSSD: Scanning Single Shot Detector for Mathematical Formulas in PDF Document Images.” ArXiv:2003.08005 [Cs], Mar. 2020. arXiv.org, http://arxiv.org/abs/2003.08005.
 
-P. S. Mali, ["Scanning Single Shot Detector for Math in Document Images."](https://scholarworks.rit.edu/theses/10210/) Order No. 22622391, Rochester Institute of Technology, Rochester, 2019.
+P.S. Mali, ["Scanning Single Shot Detector for Math in Document Images."](https://scholarworks.rit.edu/theses/10210/) Master's Thesis, Rochester Institute of Technology, 2019.
 
 M. Mahdavi, R. Zanibbi, H. Mouchere, and Utpal Garain (2019). [ICDAR 2019 CROHME + TFD: Competition on Recognition of Handwritten Mathematical Expressions and Typeset Formula Detection.](https://www.cs.rit.edu/~rlaz/files/CROHME+TFD%E2%80%932019.pdf) Proc. International Conference on Document Analysis and Recognition, Sydney, Australia (to appear).
 
