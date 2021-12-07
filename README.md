@@ -244,11 +244,13 @@ M. Mahdavi, R. Zanibbi, H. Mouchere, and Utpal Garain (2019). [ICDAR 2019 CROHME
 
 ## Contributors and Acknowledgements
 
-- Parag Mali: Created the original ScanSSD system
 - Abhisek Dey: Created faster ScanSSD-XYc (this version)
+- Parag Mali: Created the original ScanSSD system
 - Matt Langsenkamp: Server and containerization
 - Richard Zanibbi: Additional programming
-- [**Max deGroot**](https://github.com/amdegroot) provided the open-source SSD code used in the system.
+- [**Max deGroot**](https://github.com/amdegroot) created the open-source SSD code used in the system; please see the [ssd.pytorch](https://github.com/amdegroot/ssd.pytorch) library for licensing information, etc.
+
+ScanSSD/SSD-XYc code: Copyright (c) 2019-2021 Abhisek Dey, Parag Mali, Matt Langsenkamp, and Richard Zanibbi
 
 ## Support
 
