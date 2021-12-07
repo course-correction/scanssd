@@ -79,6 +79,12 @@ python3 src/train.py \
 --gpu 0
 ```
 
+### Visualizing Training Using TensorBoard
+While training is in progress, you can visualize the training trends in Tensorboard. To use TensorBoard, in a separate terminal, first activate the `scanssd` conda environment. From the root of this repo run:
+
+```tensorboard --logdir=src/TensorBoard_Logs/ScanSSD_XY_train```
+Start your local web browser and go to `http://localhost:6006/` to visualize the training curves. 
+
 - Note:
   * For training, an NVIDIA GPU is strongly recommended for speed.
   * You can pick-up training from a checkpoint by specifying the path as one of the training parameters (again, see `train.py` for options)

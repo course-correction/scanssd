@@ -34,6 +34,8 @@ clean:
 	rm -f ./src/trained_weights/${SSDW}
 	rm -rf ./src/eval/SSD/
 	rm -rf ./src/weights_ScanSSD_XY_train/
+	rm -rf ./src/TensorBoard_Logs/*
+#conda env remove -n scanssd
 
 clean-conda:
 	@echo ">> Removing Conda 'scanssd' environment"
@@ -62,4 +64,3 @@ test-server: test-example
 	@echo ">> ( this runs 'diff' on test outputs from both )"
 	@echo ""
 	./bin/compare-outputs
-
