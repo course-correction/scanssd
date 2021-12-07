@@ -253,7 +253,7 @@ M. Mahdavi, R. Zanibbi, H. Mouchere, and Utpal Garain (2019). [ICDAR 2019 CROHME
 ## Support
 
 This material is based upon work supported by the National Science Foundation
-(USA) under Grant Nos. IIS-1016815, IIS-1717997, and 2019897 (MMLI), and the
+(USA) under Grant Nos. IIS-1717997 (MathSeer), and 2019897 (MMLI), and the
 Alfred P. Sloan Foundation under Grant No. G-2017-9827.  
 
 Any opinions, findings and conclusions or recommendations expressed in this
