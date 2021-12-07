@@ -1,7 +1,14 @@
-# ScanSSD: Scanning Single Shot Detector for Math in Document Images
+# ScanSSD: Scanning Single Shot Detector for Graphics in Document Images
 
-A [PyTorch](http://pytorch.org/) implementation of ScanSSD-XYc [(Link)](https://www.cs.rit.edu/~rlaz/files/ScanSSDv2.pdf) by **Abhisek Dey**. It was developed using SSD implementation by [**Max deGroot**](https://github.com/amdegroot) and is a lighter, more efficient 
-alternative to the original [ScanSSD](https://arxiv.org/abs/2003.08005).
+**Authors:** Abhisek Dey, Parag Mali, Matt Langsenkamp, and Richard Zanibbi  
+[Dcoument and Pattern Recognition Lab (dprl)](https://www.cs.rit.edu/~dprl), Rochester Institute of Technology, USA
+
+A [PyTorch](http://pytorch.org/) implementation of ScanSSD-XYc
+[(Link)](https://www.cs.rit.edu/~rlaz/files/ScanSSDv2.pdf) by **Abhisek Dey**.
+It was developed using SSD implementation by [**Max
+deGroot**](https://github.com/amdegroot) and is a lighter, more efficient
+alternative to the original [ScanSSD](https://github.com/MaliParag/ScanSSD)
+system by Parag Mali.
 
 Developed using Cuda 11.2 and Pytorch 1.3.0
 
@@ -235,5 +242,20 @@ P. S. Mali, ["Scanning Single Shot Detector for Math in Document Images."](https
 
 M. Mahdavi, R. Zanibbi, H. Mouchere, and Utpal Garain (2019). [ICDAR 2019 CROHME + TFD: Competition on Recognition of Handwritten Mathematical Expressions and Typeset Formula Detection.](https://www.cs.rit.edu/~rlaz/files/CROHME+TFD%E2%80%932019.pdf) Proc. International Conference on Document Analysis and Recognition, Sydney, Australia (to appear).
 
-## Acknowledgements
-- [**Max deGroot**](https://github.com/amdegroot) for providing open-source SSD code
+## Contributors and Acknowledgements
+
+- Parag Mali: Created the original ScanSSD system
+- Abhisek Dey: Created faster ScanSSD-XYc (this version)
+- Matt Langsenkamp: Server and containerization
+- Richard Zanibbi: Additional programming
+- [**Max deGroot**](https://github.com/amdegroot) provided the open-source SSD code used in the system.
+
+## Support
+
+This material is based upon work supported by the National Science Foundation
+(USA) under Grant Nos. IIS-1016815, IIS-1717997, and 2019897 (MMLI), and the
+Alfred P. Sloan Foundation under Grant No. G-2017-9827.  
+
+Any opinions, findings and conclusions or recommendations expressed in this
+material are those of the author(s) and do not necessarily reflect the views of
+the National Science Foundation or the Alfred P. Sloan Foundation.
