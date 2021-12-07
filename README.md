@@ -48,7 +48,7 @@ To generate .pmath files (csv files containing only numbers for bounding-box coo
 
 ## Training ScanSSD
 ### Using Makefile
-If installed using Makefile, run `make train-example`. This should start the training automatically on the example PDF document. The weights per epoch would be saved in the `ScanSSD_XY_train` folder.
+If installed using Makefile, run `make train-example`. This should start the training automatically on the example PDF document. The weights per epoch would be saved in the `src/weights_ScanSSD_XY_train` folder.
 
 ### Manually
 - First download the fc-reduced [VGG-16](https://arxiv.org/abs/1409.1556) PyTorch base network weights [here](https://drive.google.com/file/d/1GqiyZ1TglNW5GrNQfXQ72S8mChhJ4_sD/view?usp=sharing)
@@ -92,10 +92,11 @@ Start your local web browser and go to `http://localhost:6006/` to visualize the
 ## Testing
 ## Pre-Trained weights
 
+**Note:** Skip this step if ScanSSD-XYc installed using `make` (the _Makefile_).
+
 For quick testing, pre-trained weights are available [here](https://drive.google.com/file/d/1CG8Z6R-BS9SL2ntFo8ruJhWbg8yaIuik/view?usp=sharing).
 Download and place it in the `src/trained_weights` directory.
 
-**Note:** Skip this step if ScanSSD-XYc installed using _Makefile_.
 
 ### Using Makefile
 If installed using makefile, run `make test-example`. The outputs should be generated in
