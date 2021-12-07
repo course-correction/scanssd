@@ -1,4 +1,4 @@
-# ScanSSD: Scanning Single Shot Detector for Graphics in Document Images
+# ScanSSD-XYc: Scanning Single Shot Detector for Graphics in Document Images
 
 **Authors:** Abhisek Dey, Parag Mali, Matt Langsenkamp, and Richard Zanibbi  
 [Dcoument and Pattern Recognition Lab (dprl)](https://www.cs.rit.edu/~dprl), Rochester Institute of Technology, USA
