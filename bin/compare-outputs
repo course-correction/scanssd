@@ -12,3 +12,6 @@ echo "comparing Emden sync vs async"
 diff images_temp/async_Emden76.csv images_temp/sync_Emden76.csv
 echo "comparing Emden local vs async"
 diff images_temp/async_Emden76.csv src/eval/SSD/conf_0.5/Emden76.csv
+
+# Return without error if we arrive here.
+exit 0

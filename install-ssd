@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ################################################################
-# install     - Bash script
-# MathSeer Pipeline Installation Script
+# SSD Installation Bash Script
+# install-ssd     
 #
 # Original Author: R. Zanibbi (dprl, RIT, USA - Dec 1, 2021)
 ################################################################
@@ -127,4 +127,29 @@ else
 
 	chmod ug+x ./ssdrun-train  # make executable
 	mymsg "done creating train script"
+fi
+
+
+# RZ: Too much copy-and-paste here; repeating for time.
+echo "[ Generating ./bin/ssdserver-test script ]"
+if [ -f ./bin/ssdserver-test ]
+then
+	mymsg "./bin/ssdserver-test script already created."
+else
+	MSPATH=`pwd`
+
+	echo "#!/bin/bash" > ./bin/ssdserver-test
+	echo "" >> ./bin/ssdserver-test
+	echo source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh >> ./bin/ssdserver-test
+	echo "export PYTHONPATH=${MSPATH}:${MSPATH}/src:${PYTHONPATH}" >> ./bin/ssdserver-test
+	echo "conda activate scanssd" >> ./bin/ssdserver-test
+
+	echo "" >> ./bin/ssdserver-test
+	echo "cd ./src/server" >> ./bin/ssdserver-test
+	echo "python server_test.py" >> ./bin/ssdserver-test
+	echo "" >> ./bin/ssdserver-test
+	echo "conda deactivate" >> ./bin/ssdserver-test
+
+	chmod ug+x ././bin/ssdserver-test  # make executable
+	mymsg "done creating server test script"
 fi

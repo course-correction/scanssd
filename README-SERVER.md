@@ -1,6 +1,8 @@
-#ScanSSD Server
+# ScanSSD Server
+
 This document is a supplement to the Main Readme provided in this repo. It describes how ScanSSD
-may be deployed as a server which can except PDFs, and return information about their bounding boxes.
+may be deployed as a server which can accept PDFs, and return information about their bounding boxes.
+
 It is built on that work and all acknowledgements and citations listed in the main Readme 
 apply here as well. 
 
@@ -17,6 +19,10 @@ apply here as well.
 
 After following the Python installation instructions in the main readme you should 
 have a Conda environment with all the necessary dependencies. Follow the directions below to start the server
+```shell
+make start-server
+```
+or 
 ```shell
 $ export PYTHONPATH="${PYTHONPATH}:${PWD}"
 $ conda activate scanssd
@@ -47,6 +53,21 @@ curl -X 'POST' \
 ```
 `ctrl-c` should stop the service in linux/unix shells.
 
+### Testing Server
+
+After starting the server using `make start-server` as above, to test the
+server, open a **new** terminal window, and issue the following command:
+
+```shell
+make test-server
+```
+
+This will run the local (command-line) and server on the same input files,
+and then run `diff` on the resulting detection results. Differences seen
+at the terminal should be minor rounding differences in coordinates between
+the local and server outputs. The script `bin/ssdserver-test` is used to
+run the server tests (this is created on installation).
+
 ### Docker Installation
 
 If you have the docker daemon installed and running on your machine, issue:
@@ -61,7 +82,7 @@ After installing the docker container as described above, point your web browser
 
 **Development Note:** This note is for those looking to modify the docker container for their own purposes (the one provided should work as-is, most people reading can skip this).
 
-From the top level directory of Symbol Scraper, to rebuild the docker container on your machine, make sure to use a tag (&lt;sometag&gt;) other than `latest`. You can use this command to build a new  docker image:
+From the top level directory of ScanSSD, to rebuild the docker container on your machine, make sure to use a tag (&lt;sometag&gt;) other than `latest`. You can use this command to build a new  docker image:
 
 ```shell script
 docker build -t scanssd:<sometag> . 
