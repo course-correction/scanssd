@@ -43,7 +43,8 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 You can then go to the swagger docs URL ([http://localhost:8000/docs](http://localhost:8000/docs)) 
 to interact with the server (e.g., passing PDF files to check CSV output).  
 
-Requests can also be made from the command line using Curl commands, for example:
+Requests can also be made from the command line using Curl commands, for example issuing the 
+following command in a new terminal window:
 
 ```shell
 curl -X 'POST' \
