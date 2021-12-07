@@ -55,7 +55,7 @@ curl -X 'POST' \
 ```
 will run ScanSSD-XYc over a test page image, and return a list of page numbers and 
 bounding boxes at the terminal. All values are floating point numbers (including
-page number '0' as '0.00').
+the first page number '0' as '0.00').
 
 `ctrl-c` should stop the service in linux/unix shells.
 
