@@ -41,7 +41,7 @@ def sync_calls(pdf_files, endpoint):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--endpoint', default="http://localhost:8000/predict/256")
+    parser.add_argument('--endpoint', default="http://localhost:8000/predict/?dpi=256&conf=0.5&stride=0.75")
     parser.add_argument("--gen_images", help="generate the images from the pdfs",
                     action="store_true")
     args = parser.parse_args()
