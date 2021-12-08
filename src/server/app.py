@@ -1,5 +1,6 @@
 from io import StringIO
 import copy
+import numpy as np
 import pandas as pd
 from fastapi import FastAPI, File
 from src.ssd import build_ssd
@@ -11,6 +12,12 @@ from src.args import parse_test_args, get_gpus
 import torch
 import uvicorn
 from fastapi.responses import StreamingResponse
+import sys
+
+if not sys.warnoptions:
+    import warnings
+    warnings.simplefilter("ignore")
+
 
 SCANSSD_CONF = "0.5"
 
@@ -55,14 +62,15 @@ def read_root():
     return "Welcome to the deployed ScanSSD inference model, append '/docs' to this url to access the swagger web API"
 
 
-@app.post("/predict/{dpi}")
-def predict(dpi: int, file: bytes = File(...)):
+@app.post("/predict/")
+def predict(dpi: int, conf: float, stride: float, file: bytes = File(...)):
     local_args = copy.deepcopy(args)
+    local_args.conf = [conf]
+    local_args.stride = stride
     images = convert_from_bytes(pdf_file=file, dpi=dpi)
     ret = predict_from_images(local_args, net, images)
-    ret = pd.DataFrame(ret)
     out_file_as_str = StringIO()
-    ret.to_csv(out_file_as_str, index=False, header=False, float_format='%.2f')
+    np.savetxt(out_file_as_str, ret, fmt='%.2f', delimiter=',')
     response = StreamingResponse(
         iter([out_file_as_str.getvalue()]),
         media_type='text/csv',

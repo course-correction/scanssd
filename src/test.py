@@ -7,8 +7,8 @@ import os.path as osp
 import argparse
 import torch.backends.cudnn as cudnn
 import torch.cuda.nccl
-#import progressbar 
-
+#import progressbar
+from args import parse_test_args
 from src.ssd import build_ssd
 import logging
 import time
@@ -163,8 +163,6 @@ def detect(args):
         split="test",
     )
 
-
-
     # Initialize neural network
     num_classes = 2  # +1 background
     net = build_ssd(
@@ -215,127 +213,12 @@ def detect(args):
             file_names[idx]
         )
 
-# note: defaults are set as if this is being run while in the src/ directory
-def parse_args() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="ScanSSD: Scanning Single Shot MultiBox Detector")
-    parser.add_argument(
-        "--trained_model",
-        default="AMATH512_e1GTDB.pth",
-        type=str,
-        help="Trained state_dict file path to open",
-    )
-    parser.add_argument("--models_folder", default=None, type=str,
-                        help='Optional folder path to test multiple checkpoints')
-    parser.add_argument(
-        "--save_folder", default="eval/", type=str, help="Dir to save results"
-    )
-    parser.add_argument(
-        "--visual_threshold", default=0.6, type=float, help="Final confidence threshold"
-    )
-    parser.add_argument(
-        "--cuda", default=False, type=bool, help="Use cuda to train model"
-    )
-    parser.add_argument(
-        "--dataset_root", default="../", help="Location of VOC root directory"
-    )
-    parser.add_argument("--test_data", default="testing_data", help="testing data_loaders file")
-    parser.add_argument("--verbose", default=False, type=bool, help="plot output")
-    parser.add_argument(
-        "--suffix",
-        default="_10",
-        type=str,
-        help="suffix of directory of images for testing",
-    )
-    parser.add_argument(
-        "--exp_name",
-        default="SSD",
-        help="Name of the experiment. Output will be saved at [save_folder]/[exp_name]/raw_output/",
-    )
-    parser.add_argument(
-        "--model_type",
-        default=300,
-        type=int,
-        help="Type of src model, ssd300 or ssd512",
-    )
-    parser.add_argument(
-        "--use_char_info",
-        default=False,
-        type=bool,
-        help="Whether or not to use char info",
-    )
-    parser.add_argument(
-        "--limit", default=-1, type=int, help="limit on number of test examples"
-    )
-    parser.add_argument(
-        "--cfg",
-        default="gtdb",
-        type=str,
-        help="Type of network: either gtdb or math_gtdb_512",
-    )
-    parser.add_argument(
-        "--batch_size", default=16, type=int, help="Batch size for training"
-    )
-    parser.add_argument(
-        "--num_workers",
-        default=16,
-        type=int,
-        help="Number of workers used in data_loaders loading",
-    )
-    parser.add_argument(
-        "--kernel",
-        default=[1,5],
-        type=int,
-        nargs="+",
-        help="Kernel size for feature layers: 3 3 or 1 5",
-    )
-    parser.add_argument(
-        "--padding",
-        default=[0,2],
-        type=int,
-        nargs="+",
-        help="Padding for feature layers: 1 1 or 0 2",
-    )
-    parser.add_argument(
-        "--neg_mining",
-        default=True,
-        type=bool,
-        help="Whether or not to use hard negative mining with ratio 1:3",
-    )
-    parser.add_argument(
-        "--log_dir", default="logs", type=str, help="dir to save the logs"
-    )
-    parser.add_argument(
-        "--stride", default=0.1, type=float, help="Stride to use for sliding window"
-    )
-    parser.add_argument("--window", default=512, type=int, help="Sliding window size")
-    parser.add_argument("--post_process", default=0, type=int,
-                        help="Add cropping to predicted boxes")
-    parser.add_argument("--op_mode", default='dev', type=str,
-                        help='dev or pipeline (for extraction pipeline)')
-    parser.add_argument("--conf", nargs='+', type=float, required=True,
-                        help='Confidence for window lvl')
-    parser.add_argument('--gpu', nargs='+', required=True, type=int,
-                        help='GPU IDS to train on')
-    parser.add_argument(
-        "-f",
-        default=None,
-        type=str,
-        help="Dummy arg so we can load in Jupyter Notebooks",
-    )
-
-    # if args.cuda and torch.cuda.is_available():
-    #     torch.set_default_tensor_type("torch.cuda.FloatTensor")
-    # else:
-    #     torch.set_default_tensor_type("torch.FloatTensor")
-
-    return parser
-
 
 if __name__ == "__main__":
 
     # Process arguments
     start = time.time()
-    args = parse_args().parse_args()
+    args = parse_test_args().parse_args()
 
     if not os.path.exists(args.save_folder):
         os.mkdir(args.save_folder)
