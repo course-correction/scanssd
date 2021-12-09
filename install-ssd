@@ -71,7 +71,7 @@ then
   source ~/.bashrc
 fi
 
-if [ -f /home/devops/anaconda3/bin/ ]
+if [ -d /home/devops/anaconda3/bin/ ]
 then
   export PATH="/home/devops/anaconda3/bin:$PATH"
 fi
