@@ -66,13 +66,12 @@ fi
 # Set up Conda environment
 echo "[ Creating Conda Python Environment (ScanSSD-XYc) ]"
 
-if [ -f ~/.bashrc]
+if [ -f ~/.bashrc ]
 then
   source ~/.bashrc
 fi
 
 CENV=`conda info --envs`
-echo CENV
 if grep -w "scanssd" <<< "$CENV"
 then
 	mymsg "Conda scanssd environment already created."
