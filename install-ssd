@@ -71,6 +71,11 @@ then
   source ~/.bashrc
 fi
 
+if [ -f /home/devops/anaconda3/bin/ ]
+then
+  export PATH="/home/devops/anaconda3/bin:$PATH"
+fi
+
 CENV=`conda info --envs`
 if grep -w "scanssd" <<< "$CENV"
 then
