@@ -72,6 +72,7 @@ then
 fi
 
 CENV=`conda info --envs`
+echo CENV
 if grep -w "scanssd" <<< "$CENV"
 then
 	mymsg "Conda scanssd environment already created."
