@@ -15,6 +15,5 @@ build-generic:
   script:
     - echo building docker image $CI_COMMIT_BRANCH
     - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-    - docker build . -t scanssd:latest
-    - docker tag scanssd:latest dprl/scanssd:latest
+    - docker build . -t dprl/scanssd:latest
     - docker push dprl/scanssd:latest

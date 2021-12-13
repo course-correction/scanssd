@@ -1,8 +1,9 @@
-from io import StringIO
+import zipfile
+from io import StringIO, BytesIO
 import copy
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, File
+from fastapi import FastAPI, File, Response
 from src.ssd import build_ssd
 from src.data_loaders import exp_cfg
 import torch.nn as nn
@@ -82,6 +83,21 @@ def predict(dpi: int, conf: float, stride: float, file: bytes = File(...)):
     # return
     return response
 
+
+@app.post("/convert")
+async def convert(dpi: int, file: bytes = File(...)):
+    images = convert_from_bytes(pdf_file=file, dpi=dpi)
+    zip_io = BytesIO()
+    zipped_images = zipfile.ZipFile(zip_io, "w")
+    for i, img in enumerate(images):
+        image_bytes = BytesIO()
+        img.save(image_bytes, format=img.format)
+        zipped_images.writestr(str(i)+".png", image_bytes.getvalue(), compress_type=zipfile.ZIP_DEFLATED)
+    zipped_images.close()
+    resp = Response(zip_io.getvalue(), media_type="application/x-zip-compressed", headers={
+        'Content-Disposition': f'attachment;filename={f"pdf2img_{dpi}.zip"}'
+    })
+    return resp
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
