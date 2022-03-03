@@ -1,0 +1,68 @@
+
+mkdir -p 'compare-output-local'
+mkdir -p 'compare-output-docker'
+
+
+./bin/start-server
+# let server get up
+sleep 5
+curl -X 'POST' \
+   'http://0.0.0.0:8901/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/Emden76.pdf;type=application/pdf' > compare-output-local/Emden76.csv
+
+curl -X 'POST' \
+   'http://0.0.0.0:8901/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/ASENS_1997_367_384.pdf;type=application/pdf' > compare-output-local/ASENS_1997_367_384.csv
+
+curl -X 'POST' \
+   'http://0.0.0.0:8901/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/K15-1004.pdf;type=application/pdf' > compare-output-local/K15-1004.csv
+
+./bin/kill-server
+sleep 2
+docker run --name testcomparecontainer --gpus all -d -p 8901:80 dprl/scanssd:latest
+# let the server get up
+sleep 5
+
+curl -X 'POST' \
+   'http://0.0.0.0:8901/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/Emden76.pdf;type=application/pdf' > compare-output-docker/Emden76.csv
+
+curl -X 'POST' \
+   'http://0.0.0.0:8901/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/ASENS_1997_367_384.pdf;type=application/pdf' > compare-output-docker/ASENS_1997_367_384.csv
+
+curl -X 'POST' \
+   'http://0.0.0.0:8901/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/K15-1004.pdf;type=application/pdf' > compare-output-docker/K15-1004.csv
+
+# stop docker
+docker container stop testcomparecontainer
+docker container rm testcomparecontainer
+
+echo ""
+echo "Emden76"
+echo ""
+diff compare-output-local/Emden76.csv compare-output-docker/Emden76.csv
+
+echo ""
+echo "ASENS_1997_367_384"
+echo ""
+diff compare-output-local/ASENS_1997_367_384.csv compare-output-docker/ASENS_1997_367_384.csv
+
+echo ""
+echo "K15-1004"
+echo ""
+diff compare-output-local/K15-1004.csv compare-output-docker/K15-1004.csv

@@ -9,7 +9,7 @@ from src.data_loaders import GTDB_ROOT
 
 
 def get_gpus() -> Tuple[List[str], int, int]:
-    free = os.popen('nvidia-smi -q -d Memory |grep -A4 GPU|grep Free').read().strip().split('\n')
+    free = os.popen('nvidia-smi -q -d Memory |grep -A5 GPU|grep Free').read().strip().split('\n')
     memory_available = [int(f.split()[2]) for f in free]
     gpus = []
 
