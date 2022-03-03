@@ -48,10 +48,10 @@ following command in a new terminal window:
 
 ```shell
 curl -X 'POST' \
-  'http://localhost:8000/predict/256' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=@math.pdf;type=application/pdf'
+   'http://0.0.0.0:8000/predict/?dpi=256&conf=0.5&stride=0.75' \
+   -H 'accept: application/json' \
+   -H 'Content-Type: multipart/form-data' \
+   -F 'file=@quick_start_data/pdf/Emden76.pdf;type=application/pdf'
 ```
 will run ScanSSD-XYc over a test page image, and return a list of page numbers and 
 bounding boxes at the terminal. All values are floating point numbers (including
@@ -76,7 +76,7 @@ run the server tests (this is created on installation).
 
 ### Docker Installation
 
-If you have the docker daemon installed and running on your machine, issue:
+If you have [nvidia docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) installed and running on your machine, issue:
 
 ```shell script
 $ docker run --gpus all -p 8000:80 dprl/scanssd:latest

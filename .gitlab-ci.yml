@@ -10,8 +10,7 @@ build-generic:
   stage: build
   only:
     - main
-    - 2-scanssd-containerize-fastapi
-    - 6-add-stride-and-conf-to-server
+    - 7-scanssd-embed-fonts-in-container
   script:
     - echo building docker image $CI_COMMIT_BRANCH
     - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD

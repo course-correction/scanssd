@@ -1,0 +1,166 @@
+Traceback (most recent call last):
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/bin/uvicorn", line 8, in <module>
+    sys.exit(main())
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 829, in __call__
+    return self.main(*args, **kwargs)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 782, in main
+    rv = self.invoke(ctx)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 1066, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 610, in invoke
+    return callback(*args, **kwargs)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 339, in main
+    run(**kwargs)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 362, in run
+    server.run()
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 390, in run
+    loop.run_until_complete(self.serve(sockets=sockets))
+  File "uvloop/loop.pyx", line 1456, in uvloop.loop.Loop.run_until_complete
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 397, in serve
+    config.load()
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/config.py", line 278, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/importer.py", line 20, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "./app.py", line 12, in <module>
+    from src.args import parse_test_args, get_gpus
+  File "/home/mattlangsenkamp/Documents/dprl/scanssd/src/args.py", line 30, in <module>
+    devices = get_gpus()
+  File "/home/mattlangsenkamp/Documents/dprl/scanssd/src/args.py", line 13, in get_gpus
+    memory_available = [int(f.split()[2]) for f in free]
+  File "/home/mattlangsenkamp/Documents/dprl/scanssd/src/args.py", line 13, in <listcomp>
+    memory_available = [int(f.split()[2]) for f in free]
+IndexError: list index out of range
+Traceback (most recent call last):
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/bin/uvicorn", line 8, in <module>
+    sys.exit(main())
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 829, in __call__
+    return self.main(*args, **kwargs)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 782, in main
+    rv = self.invoke(ctx)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 1066, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/click/core.py", line 610, in invoke
+    return callback(*args, **kwargs)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 339, in main
+    run(**kwargs)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 362, in run
+    server.run()
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 390, in run
+    loop.run_until_complete(self.serve(sockets=sockets))
+  File "uvloop/loop.pyx", line 1456, in uvloop.loop.Loop.run_until_complete
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/main.py", line 397, in serve
+    config.load()
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/config.py", line 278, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/site-packages/uvicorn/importer.py", line 20, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/home/mattlangsenkamp/anaconda3/envs/scanssd/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "./app.py", line 12, in <module>
+    from src.args import parse_test_args, get_gpus
+  File "/home/mattlangsenkamp/Documents/dprl/scanssd/src/args.py", line 30, in <module>
+    devices = get_gpus()
+  File "/home/mattlangsenkamp/Documents/dprl/scanssd/src/args.py", line 13, in get_gpus
+    memory_available = [int(f.split()[2]) for f in free]
+  File "/home/mattlangsenkamp/Documents/dprl/scanssd/src/args.py", line 13, in <listcomp>
+    memory_available = [int(f.split()[2]) for f in free]
+IndexError: list index out of range
+INFO:     Started server process [437887]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+INFO:     Started server process [450851]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51870 - "POST /predict/256 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52156 - "POST /predict/256 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52312 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52312 - "GET /openapi.json HTTP/1.1" 200 OK
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 189.70it/s]INFO:     127.0.0.1:52558 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 386.06it/s]INFO:     127.0.0.1:52758 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [476659]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+INFO:     Started server process [477228]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8901): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 433.33it/s]INFO:     127.0.0.1:56092 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 780.57it/s]INFO:     127.0.0.1:56150 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [493376]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+INFO:     Started server process [494399]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+  Processing:   0%|          | 0/18 [00:00<?, ?it/s]  Processing: 100%|██████████| 18/18 [00:00<00:00, 293.11it/s]INFO:     127.0.0.1:58904 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 777.77it/s]INFO:     127.0.0.1:59048 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [500120]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 434.72it/s]INFO:     127.0.0.1:59850 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/18 [00:00<?, ?it/s]  Processing: 100%|██████████| 18/18 [00:00<00:00, 293.74it/s]INFO:     127.0.0.1:59906 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 788.43it/s]INFO:     127.0.0.1:60060 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [1156903]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 578.29it/s]INFO:     127.0.0.1:55170 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/18 [00:00<?, ?it/s]  Processing: 100%|██████████| 18/18 [00:00<00:00, 379.21it/s]INFO:     127.0.0.1:55172 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 1009.80it/s]INFO:     127.0.0.1:55182 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [1158163]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 598.31it/s]INFO:     127.0.0.1:55212 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/18 [00:00<?, ?it/s]  Processing: 100%|██████████| 18/18 [00:00<00:00, 362.64it/s]INFO:     127.0.0.1:55216 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 999.24it/s]INFO:     127.0.0.1:55222 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [1160782]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 611.19it/s]INFO:     127.0.0.1:55278 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/18 [00:00<?, ?it/s]  Processing: 100%|██████████| 18/18 [00:00<00:00, 390.91it/s]INFO:     127.0.0.1:55282 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 1034.28it/s]INFO:     127.0.0.1:55286 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+INFO:     Started server process [1169937]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8901 (Press CTRL+C to quit)
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 571.60it/s]INFO:     127.0.0.1:55494 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/18 [00:00<?, ?it/s]  Processing: 100%|██████████| 18/18 [00:00<00:00, 385.93it/s]INFO:     127.0.0.1:55496 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
+
+  Processing:   0%|          | 0/10 [00:00<?, ?it/s]  Processing: 100%|██████████| 10/10 [00:00<00:00, 962.13it/s]INFO:     127.0.0.1:55502 - "POST /predict/?dpi=256&conf=0.5&stride=0.75 HTTP/1.1" 200 OK
