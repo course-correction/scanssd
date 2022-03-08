@@ -14,4 +14,5 @@ source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/c
 
 export PYTHONPATH="${PYTHONPATH}:${PWD}:${PWD}/protables:${PWD}/lgeval"
 conda activate scanssd
-uvicorn src.server.app:app --host 0.0.0.0 --port 80
+cd src/server/ 
+uvicorn app:app --host 0.0.0.0 --port 80
