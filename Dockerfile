@@ -7,5 +7,6 @@ ENV PYTHONPATH="/workspace/"
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-WORKDIR src/server
-CMD ["conda", "run", "-n", "scanssd", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
+#WORKDIR src/server
+#CMD ["conda", "run", "-n", "scanssd", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["./bin/start-server-docker"]
