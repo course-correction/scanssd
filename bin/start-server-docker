@@ -1,0 +1,17 @@
+
+#!/bin/bash
+
+if [ -f ~/.bashrc ]
+then
+  source ~/.bashrc
+fi
+
+if [ -d /home/devops/anaconda3/bin/ ]
+then
+  export PATH="/home/devops/anaconda3/bin:$PATH"
+fi
+source `conda info | grep 'base environment' | awk '{print $4}'`/etc/profile.d/conda.sh
+
+export PYTHONPATH="${PYTHONPATH}:${PWD}:${PWD}/protables:${PWD}/lgeval"
+conda activate scanssd
+uvicorn src.server.app:app --host 0.0.0.0 --port 80
