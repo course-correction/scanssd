@@ -58,6 +58,7 @@ gpus = ','.join(gpus)
 devices = torch.device('cuda:' + gpus)
 net = net.to(devices)
 
+
 @app.get("/")
 def read_root():
     return "Welcome to the deployed ScanSSD inference model, append '/docs' to this url to access the swagger web API"
