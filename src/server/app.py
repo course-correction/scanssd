@@ -83,6 +83,24 @@ def predict(dpi: int, conf: float, stride: float, file: bytes = File(...)):
     # return
     return response
 
+@app.post("/predict_pipeline/")
+def predict(dpi: int, conf: float, stride: float, images: bytes = File(...)):
+    local_args = copy.deepcopy(args)
+    local_args.conf = [conf]
+    local_args.stride = stride    
+    ret = predict_from_images(local_args, net, images)
+    out_file_as_str = StringIO()
+    np.savetxt(out_file_as_str, ret, fmt='%.2f', delimiter=',')
+    response = StreamingResponse(
+        iter([out_file_as_str.getvalue()]),
+        media_type='text/csv',
+        headers={
+            'Content-Disposition': 'attachment;filename=predictions.csv',
+            'Access-Control-Expose-Headers': 'Content-Disposition'
+        }
+    )
+    # return
+    return response
 
 @app.post("/convert")
 async def convert(dpi: int, file: bytes = File(...)):
