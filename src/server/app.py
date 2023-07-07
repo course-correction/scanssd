@@ -3,7 +3,9 @@ from io import StringIO, BytesIO
 import copy
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, File, Response
+from typing import List
+from fastapi import FastAPI, File, Response, UploadFile
+from typing_extensions import Annotated
 from src.ssd import build_ssd
 from src.data_loaders import exp_cfg
 import torch.nn as nn
@@ -14,11 +16,12 @@ import torch
 import uvicorn
 from fastapi.responses import StreamingResponse
 import sys
+from PIL import Image
 
 if not sys.warnoptions:
     import warnings
-    warnings.simplefilter("ignore")
 
+    warnings.simplefilter("ignore")
 
 SCANSSD_CONF = "0.5"
 
@@ -36,7 +39,9 @@ args = parser.parse_args(["--model_type", "512",
                           "--window", "512",
                           "--gpu", *gpu_data[0],
                           "--stride", "1.0",
-                          "--trained_model","../trained_weights/ssd512GTDB_256_epoch15.pth"])
+                          "--post_process", "0",
+                          "--op_mode", "pipeline",
+                          "--trained_model", "../trained_weights/ssd512GTDB_256_epoch15.pth"])
 
 gpus = [str(gpu_id) for gpu_id in args.gpu]
 gpus = ','.join(gpus)
@@ -48,10 +53,10 @@ net = build_ssd(
 net = nn.DataParallel(net, device_ids=args.gpu)
 
 net.module.load_state_dict(
-            torch.load(
-                args.trained_model,
-            )
-        )
+    torch.load(
+        args.trained_model,
+    )
+)
 net.eval()
 gpus = [str(gpu_id) for gpu_id in args.gpu]
 gpus = ','.join(gpus)
@@ -84,23 +89,28 @@ def predict(dpi: int, conf: float, stride: float, file: bytes = File(...)):
     # return
     return response
 
+
 @app.post("/predict_pipeline/")
-def predict(dpi: int, conf: float, stride: float, images: bytes = File(...)):
+def predict_pipeline(conf: float, stride: float, images: List[UploadFile] = File(...)):
     local_args = copy.deepcopy(args)
     local_args.conf = [conf]
-    local_args.stride = stride    
-    ret = predict_from_images(local_args, net, images)
+    images = sorted(images, key=lambda x: int(x.filename[:-4]))
+    local_args.stride = stride
+    images_pil = []
+    for i in images:
+        images_pil.append(Image.open(i.file))
+    ret = predict_from_images(local_args, net, images_pil)
     out_file_as_str = StringIO()
     np.savetxt(out_file_as_str, ret, fmt='%.2f', delimiter=',')
+
     response = StreamingResponse(
         iter([out_file_as_str.getvalue()]),
         media_type='text/csv',
         headers={
             'Content-Disposition': 'attachment;filename=predictions.csv',
             'Access-Control-Expose-Headers': 'Content-Disposition'
-        }
+        },
     )
-    # return
     return response
 
 @app.post("/convert")
@@ -111,13 +121,13 @@ async def convert(dpi: int, file: bytes = File(...)):
     for i, img in enumerate(images):
         image_bytes = BytesIO()
         img.save(image_bytes, format=img.format)
-        zipped_images.writestr(str(i)+".png", image_bytes.getvalue(), compress_type=zipfile.ZIP_DEFLATED)
+        zipped_images.writestr(str(i) + ".png", image_bytes.getvalue(), compress_type=zipfile.ZIP_DEFLATED)
     zipped_images.close()
     resp = Response(zip_io.getvalue(), media_type="application/x-zip-compressed", headers={
         'Content-Disposition': f'attachment;filename={f"pdf2img_{dpi}.zip"}'
     })
     return resp
 
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
