@@ -21,7 +21,7 @@ import numpy as np
 import argparse
 import time
 import torch.nn.functional as F
-from torch.tensor import Tensor
+from torch import Tensor
 import torchvision.transforms as transforms
 from src.utils.augmentations import GenerateWindows, PadTensor, DPRLToTensor
 

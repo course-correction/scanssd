@@ -67,9 +67,14 @@ class SSD(nn.Module):
         self.loc = nn.ModuleList(head[0])
         self.conf = nn.ModuleList(head[1])
 
+        self.top_k = 200
+        self.conf_thresh = args.conf
+        self.gpus = gpu_id
+
+
         if phase == "test":
             self.softmax = nn.Softmax(dim=-1)
-            self.detect = Detect(cfg, num_classes, 200, args.conf, gpu_id)
+            #self.detect = Detect(cfg, num_classes, 200, args.conf, gpu_id)
             # self.detect = Detect(cfg, num_classes, 0, 1000000, 0.01, 1.00)
 
     def forward(self, x): #self,
@@ -124,7 +129,9 @@ class SSD(nn.Module):
         self.priors = self.priors.to(loc.device)
 
         if self.phase == "test":
-            output = self.detect(
+            output = Detect.forward(
+                # moved from constuctor
+                self.cfg, self.num_classes, self.top_k, self.conf_thresh, self.gpus,
                 loc.view(loc.size(0), -1, 4),  # loc preds
                 self.softmax(
                     conf.view(conf.size(0), -1, self.num_classes)
